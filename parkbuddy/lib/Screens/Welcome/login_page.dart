@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:parkbuddy/Screens/qr_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,10 +16,10 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
 
   Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
+    //await FirebaseAuth.instance.signInWithEmailAndPassword(
+    //email: _emailController.text.trim(),
+    //password: _passwordController.text.trim(),
+    //);
   }
 
   @override
@@ -31,10 +32,13 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               //logo
-              Icon(
-                //trocar pelo logo
-                Icons.cake_rounded,
-                size: 100,
+              Transform.scale(
+                scale: 0.75,
+                child: Image(
+                  image: AssetImage(
+                    'assets/images/logo-no-background.png',
+                  ),
+                ),
               ),
               SizedBox(
                 height: 75,
@@ -113,18 +117,26 @@ class _LoginPageState extends State<LoginPage> {
                   child: Container(
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Colors.deepPurple,
+                      color: Color.fromRGBO(160, 5, 10, 40),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
-                      child: Text(
-                        'Sign In',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) => CreateScreen())));
+                        },
+                        child: Text(
+                          'Sign In',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
 
-                          // tou aquiiii https://youtu.be/TkuO8OLgvkk
+                            // tou aquiiii https://youtu.be/TkuO8OLgvkk
+                          ),
                         ),
                       ),
                     ),
@@ -139,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Center(
                   child: GestureDetector(
                       onTap: () {
-                        print("register");
+                        print("register"); // fazer isto
                       },
                       child: Text('Do not have an account? Register Now')),
                 ),

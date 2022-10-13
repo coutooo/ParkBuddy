@@ -1,3 +1,7 @@
 login
 menu (park | share | statistics) -> definicoes ->
 -> pagina perfil
+
+
+
+pensei em "avisar se tem estacionameto ao lado" + hora
