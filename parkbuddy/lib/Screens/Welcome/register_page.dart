@@ -1,17 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:parkbuddy/Screens/Welcome/register_page.dart';
-import 'package:parkbuddy/Screens/qr_page.dart';
+import 'package:parkbuddy/Screens/Welcome/login_page.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   // text controllers
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -64,7 +63,29 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: 50,
               ),
-
+              //name  textfield
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.0),
+                child: TextField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.deepPurple),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    hintText: 'Name',
+                    fillColor: Colors.grey[200],
+                    filled: true,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
               //email textfield
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25.0),
@@ -109,7 +130,26 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: 10,
               ),
-
+              // confirm password textfield
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.0),
+                child: TextField(
+                  obscureText: true,
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    hintText: 'Confirm Password',
+                    fillColor: Colors.grey[200],
+                    filled: true,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
               // sign in button
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25.0),
@@ -123,14 +163,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     child: Center(
                       child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: ((context) => CreateScreen())));
-                        },
+                        onTap: () {},
                         child: Text(
-                          'Sign In',
+                          'Sign Up',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -155,9 +190,9 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: ((context) => RegisterPage())));
+                                builder: ((context) => LoginPage())));
                       },
-                      child: Text('Do not have an account? Register Now')),
+                      child: Text('Already have an account? Sign In')),
                 ),
               )
             ],
