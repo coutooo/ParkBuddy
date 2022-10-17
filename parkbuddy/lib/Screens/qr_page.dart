@@ -29,7 +29,7 @@ class _CreateScreenState extends State<CreateScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(160, 5, 10, 40),
-        title: Text("Generate QR Code"),
+        title: Text("Share"),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -37,7 +37,7 @@ class _CreateScreenState extends State<CreateScreen> {
         children: [
           // qr code
           BarcodeWidget(
-            color: Color.fromRGBO(160, 5, 10, 40),
+            color: Colors.black,
             data: qrString,
             height: 250,
             width: 250,

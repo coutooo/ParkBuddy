@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parkbuddy/Screens/Welcome/register_page.dart';
+import 'package:parkbuddy/Screens/main_page.dart';
 import 'package:parkbuddy/Screens/qr_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -127,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: ((context) => CreateScreen())));
+                                  builder: ((context) => MainPage())));
                         },
                         child: Text(
                           'Sign In',
