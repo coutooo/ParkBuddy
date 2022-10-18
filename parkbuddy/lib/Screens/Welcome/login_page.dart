@@ -155,13 +155,17 @@ class _LoginPageState extends State<LoginPage> {
                 padding: EdgeInsets.symmetric(horizontal: 25.0),
                 child: Center(
                   child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: ((context) => RegisterPage())));
-                      },
-                      child: Text('Do not have an account? Register Now')),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => RegisterPage())));
+                    },
+                    child: Text(
+                      'Do not have an account? Register Now',
+                      style: TextStyle(decoration: TextDecoration.underline),
+                    ),
+                  ),
                 ),
               )
             ],

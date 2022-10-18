@@ -154,7 +154,10 @@ class _RegisterPageState extends State<RegisterPage> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25.0),
                 child: GestureDetector(
-                  onTap: signIn,
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: ((context) => LoginPage())));
+                  },
                   child: Container(
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
@@ -163,15 +166,18 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     child: Center(
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) => LoginPage())));
+                        },
                         child: Text(
                           'Sign Up',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
-
-                            // tou aquiiii https://youtu.be/TkuO8OLgvkk
                           ),
                         ),
                       ),
@@ -192,7 +198,10 @@ class _RegisterPageState extends State<RegisterPage> {
                             MaterialPageRoute(
                                 builder: ((context) => LoginPage())));
                       },
-                      child: Text('Already have an account? Sign In')),
+                      child: Text(
+                        'Already have an account? Sign In',
+                        style: TextStyle(decoration: TextDecoration.underline),
+                      )),
                 ),
               )
             ],
