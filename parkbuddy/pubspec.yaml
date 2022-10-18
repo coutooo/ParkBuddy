@@ -42,11 +42,16 @@ dependencies:
   barcode_widget: ^2.0.2
   pedometer: ^3.0.0
   firebase_auth: ^3.11.2
+  flutter_launcher_icons: ^0.10.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo-black.png"
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
