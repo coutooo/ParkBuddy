@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parkbuddy/Screens/pedometer_page.dart';
+import 'package:parkbuddy/Screens/pedometer/pedometer_page.dart';
 import 'package:parkbuddy/Screens/qr_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -104,7 +104,7 @@ class _MainPageState extends State<MainPage> {
             InkWell(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => PedometerPage())));
+                    MaterialPageRoute(builder: ((context) => PedPage())));
               },
               child: Card(
                 elevation: 10,

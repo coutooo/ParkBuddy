@@ -43,6 +43,9 @@ dependencies:
   pedometer: ^3.0.0
   firebase_auth: ^3.11.2
   flutter_launcher_icons: ^0.10.0
+  hive: ^2.2.3
+  jiffy: ^5.0.0
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:

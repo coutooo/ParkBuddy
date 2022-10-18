@@ -139,8 +139,6 @@ class _LoginPageState extends State<LoginPage> {
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
-
-                            // tou aquiiii https://youtu.be/TkuO8OLgvkk
                           ),
                         ),
                       ),
