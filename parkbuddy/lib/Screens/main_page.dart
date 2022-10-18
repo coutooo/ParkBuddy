@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parkbuddy/Screens/Profile/profile_page.dart';
 import 'package:parkbuddy/Screens/pedometer/pedometer_page.dart';
 import 'package:parkbuddy/Screens/qr_page.dart';
 
@@ -136,7 +137,8 @@ class _MainPageState extends State<MainPage> {
             // Definicoes card
             InkWell(
               onTap: () {
-                //settings button
+                Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => ProfilePage())));
               },
               child: Card(
                 elevation: 10,
