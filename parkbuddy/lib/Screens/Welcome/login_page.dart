@@ -115,7 +115,10 @@ class _LoginPageState extends State<LoginPage> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25.0),
                 child: GestureDetector(
-                  onTap: signIn,
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: ((context) => MainPage())));
+                  },
                   child: Container(
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
