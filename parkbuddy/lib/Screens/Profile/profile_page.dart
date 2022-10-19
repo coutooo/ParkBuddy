@@ -116,7 +116,7 @@ class ProfilePage extends StatelessWidget {
                         Text(
                           'My Orders',
                           style: TextStyle(
-                            color: Color.fromRGBO(39, 105, 171, 1),
+                            color: Color.fromRGBO(160, 5, 10, 40),
                             fontSize: 27,
                             fontFamily: 'Nunito',
                           ),
