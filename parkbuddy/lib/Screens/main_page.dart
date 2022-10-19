@@ -159,7 +159,7 @@ class _MainPageState extends State<MainPage> {
                       width: 10,
                     ),
                     Text(
-                      'More',
+                      'Profile',
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
