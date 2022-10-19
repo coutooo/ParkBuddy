@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parkbuddy/Screens/Profile/profile_page.dart';
+import 'package:parkbuddy/Screens/park_page.dart';
 import 'package:parkbuddy/Screens/pedometer/pedometer_page.dart';
 import 'package:parkbuddy/Screens/qr_page.dart';
 
@@ -17,6 +18,7 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         title: const Text("Menu"),
         backgroundColor: Color.fromRGBO(160, 5, 10, 40),
+        automaticallyImplyLeading: false, // tirar o botao de andar para trás
       ),
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -39,7 +41,8 @@ class _MainPageState extends State<MainPage> {
             // park card
             InkWell(
               onTap: () {
-                //clique do park
+                Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => ParkPage())));
               },
               child: Card(
                 elevation: 10,

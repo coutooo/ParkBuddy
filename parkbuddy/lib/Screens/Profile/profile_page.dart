@@ -5,6 +5,8 @@ import 'package:parkbuddy/Screens/Welcome/register_page.dart';
 import 'package:parkbuddy/Screens/main_page.dart';
 import 'package:parkbuddy/Screens/qr_page.dart';
 
+import '../Welcome/login_page.dart';
+
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -23,7 +25,8 @@ class ProfilePage extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () {
-              // do something
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => LoginPage())));
             },
           )
         ],
