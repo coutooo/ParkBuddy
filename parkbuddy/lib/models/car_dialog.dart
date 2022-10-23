@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'cars.dart';
+
 class AddCarDialog extends StatefulWidget {
-  const AddCarDialog({Key? key}) : super(key: key);
+  final Function(Car) addCar;
+
+  AddCarDialog(this.addCar);
 
   @override
   State<AddCarDialog> createState() => _AddCarDialogState();
@@ -50,7 +54,15 @@ class _AddCarDialogState extends State<AddCarDialog> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
-              onPressed: () {},
+              onPressed: () {
+                final car = Car(
+                    icon: iconController.text,
+                    name: nameController.text,
+                    localization: localController.text);
+
+                widget.addCar(car);
+                Navigator.of(context).pop();
+              },
               child: Text("Add Car"),
             ),
 
