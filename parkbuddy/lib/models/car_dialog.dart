@@ -65,8 +65,6 @@ class _AddCarDialogState extends State<AddCarDialog> {
               },
               child: Text("Add Car"),
             ),
-
-            // vou aqui https://youtu.be/t3sRreruhYQ?t=1278
           ],
         ),
       ),

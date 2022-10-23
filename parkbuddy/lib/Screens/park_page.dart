@@ -56,6 +56,7 @@ class _ParkPageState extends State<ParkPage> {
                 margin: EdgeInsets.all(4),
                 elevation: 8,
                 child: ListTile(
+                  leading: Image.asset(carList[index].icon),
                   title: Text(
                     carList[index].name,
                     style: TextStyle(
