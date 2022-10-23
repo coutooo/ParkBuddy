@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:parkbuddy/models/carRepo.dart';
 import 'package:parkbuddy/models/car_dialog.dart';
 
+import '../models/cars.dart';
+
 class ParkPage extends StatefulWidget {
   const ParkPage({Key? key}) : super(key: key);
 
@@ -10,16 +12,22 @@ class ParkPage extends StatefulWidget {
 }
 
 class _ParkPageState extends State<ParkPage> {
+  List<Car> carList = [];
+
   @override
   Widget build(BuildContext context) {
-    final cars = CarRepos.cars;
+    void addCarData(Car car) {
+      setState(() {
+        carList.add(car);
+      });
+    }
 
     void showCarDialog() {
       showDialog(
         context: context,
         builder: (_) {
           return AlertDialog(
-            content: AddCarDialog(),
+            content: AddCarDialog(addCarData),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           );
@@ -28,21 +36,57 @@ class _ParkPageState extends State<ParkPage> {
     }
 
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Color.fromRGBO(160, 5, 10, 40),
-          onPressed: () {
-            showCarDialog();
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromRGBO(160, 5, 10, 40),
+        onPressed: () {
+          showCarDialog();
+        },
+        child: Icon(Icons.add),
+      ),
+      appBar: AppBar(
+        title: const Text("Park"),
+        backgroundColor: Color.fromRGBO(160, 5, 10, 40),
+      ),
+      backgroundColor: Colors.grey[300],
+      body: Container(
+        height: MediaQuery.of(context).size.height * 0.75,
+        child: ListView.builder(
+          itemBuilder: (ctx, index) {
+            return Card(
+                margin: EdgeInsets.all(4),
+                elevation: 8,
+                child: ListTile(
+                  leading: Image.asset(carList[index].icon),
+                  title: Text(
+                    carList[index].name,
+                    style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.blueGrey,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  subtitle: Text(
+                    carList[index].localization,
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black12,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  trailing: Text(
+                    carList[index].icon,
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black26,
+                        fontWeight: FontWeight.w400),
+                  ), // mudar isto ver embaixo
+                ));
           },
-          child: Icon(Icons.add),
+          itemCount: carList.length,
         ),
-        appBar: AppBar(
-          title: const Text("Park"),
-          backgroundColor: Color.fromRGBO(160, 5, 10, 40),
-        ),
-        backgroundColor: Colors.grey[300],
-        body: Container(
-          height: MediaQuery.of(context).size.height * 0.75,
-          child: ListView.separated(
+      ),
+    );
+  }
+
+  /*ListView.separated(
               itemBuilder: (BuildContext context, int pos) {
                 return ListTile(
                   leading: Image.asset(cars[pos].icon),
@@ -53,6 +97,5 @@ class _ParkPageState extends State<ParkPage> {
               padding: EdgeInsets.all(16),
               separatorBuilder: (_, __) => Divider(),
               itemCount: cars.length),
-        ));
-  }
+              */
 }
