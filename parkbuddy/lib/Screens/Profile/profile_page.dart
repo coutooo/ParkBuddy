@@ -100,8 +100,7 @@ class ProfilePage extends StatelessWidget {
                   height: 25,
                 ),
                 Container(
-                  height: height * 0.5,
-                  width: width,
+                  width: width * 0.8,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
                     color: Colors.white,
@@ -143,6 +142,19 @@ class ProfilePage extends StatelessWidget {
                             color: Colors.grey,
                             borderRadius: BorderRadius.circular(30),
                           ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          height: height * 0.15,
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                       ],
                     ),
