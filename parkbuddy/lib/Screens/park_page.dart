@@ -37,13 +37,11 @@ class _ParkPageState extends State<ParkPage> {
       );
     }
 
-    Future<void> setCarPref(imag) async {
+    Future<void> setCarPref(path) async {
       // Obtain shared preferences.
       final prefs = await SharedPreferences.getInstance();
       // Save an integer value to 'counter' key.
-      await prefs.setString('imagePath', imag);
-
-      prefs.commit();
+      await prefs.setString('imagePath', path);
     }
 
     return Scaffold(
@@ -67,10 +65,8 @@ class _ParkPageState extends State<ParkPage> {
               onTap: () {
                 setCarPref(carList[index].icon);
                 // fazer pagina onde se vai ver as fotos e assim  Image.asset(carList[index].icon)
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) => InfoPage(carList[index].icon))));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => InfoPage())));
               },
               child: Card(
                   margin: EdgeInsets.all(4),

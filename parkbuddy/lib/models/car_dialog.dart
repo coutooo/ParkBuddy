@@ -104,7 +104,7 @@ class _AddCarDialogState extends State<AddCarDialog> {
               onPressed: () {
                 final car = Car(
                     icon: _image != null
-                        ? _image!.path.toString()
+                        ? _image!.path
                         : 'assets/images/blackcar.png',
                     name: nameController.text,
                     localization: localController.text);

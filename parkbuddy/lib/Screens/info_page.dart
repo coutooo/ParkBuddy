@@ -1,9 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class InfoPage extends StatefulWidget {
-  final String icon;
-  const InfoPage(this.icon, {Key? key}) : super(key: key);
+  const InfoPage({Key? key}) : super(key: key);
 
   @override
   State<InfoPage> createState() => _InfoPageState();
@@ -43,7 +44,10 @@ class _InfoPageState extends State<InfoPage> {
           future: getCarPref(),
           builder: (BuildContext context, AsyncSnapshot<Image> image) {
             if (image.hasData) {
-              return Image.asset(carImage); // image is ready
+              return Image.file(
+                File(carImage),
+                width: 200,
+              ); // image is ready
             } else {
               return new Container(); // placeholder
             }
