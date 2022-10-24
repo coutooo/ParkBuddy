@@ -1,5 +1,5 @@
 class Car {
-  final String icon;
+  var icon;
   final String name;
   final String localization;
 
