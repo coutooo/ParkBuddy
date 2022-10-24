@@ -51,7 +51,10 @@ class _AddCarDialogState extends State<AddCarDialog> {
         margin: EdgeInsets.all(4),
         child: TextField(
           decoration: InputDecoration(
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color.fromRGBO(160, 5, 10, 40))),
             labelText: hint,
+            labelStyle: TextStyle(color: Colors.black38),
             border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black38),
             ),
@@ -83,6 +86,9 @@ class _AddCarDialogState extends State<AddCarDialog> {
 
             // https://youtu.be/IePaAGXzmtU?t=1   <- image picker
             ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromRGBO(160, 5, 10, 40),
+                ),
                 onPressed: () {
                   getImage();
                 },
@@ -95,17 +101,18 @@ class _AddCarDialogState extends State<AddCarDialog> {
                     Text('Pick an Image')
                   ],
                 )),
-            buildTextfield('assets/images/blackcar.png', iconController),
-            buildTextfield('Car', nameController),
+            //buildTextfield('assets/images/blackcar.png', iconController),
+            buildTextfield(
+              'Car',
+              nameController,
+            ),
             buildTextfield('Place', localController),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
               onPressed: () {
                 final car = Car(
-                    icon: _image != null
-                        ? _image!.path
-                        : 'assets/images/blackcar.png',
+                    icon: _image != null ? _image!.path : null,
                     name: nameController.text,
                     localization: localController.text);
 

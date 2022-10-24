@@ -41,7 +41,9 @@ class _ParkPageState extends State<ParkPage> {
       // Obtain shared preferences.
       final prefs = await SharedPreferences.getInstance();
       // Save an integer value to 'counter' key.
-      await prefs.setString('imagePath', path);
+      if (path != null) {
+        await prefs.setString('imagePath', path);
+      }
     }
 
     return Scaffold(
