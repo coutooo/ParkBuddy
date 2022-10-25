@@ -63,41 +63,56 @@ class _ParkPageState extends State<ParkPage> {
         height: MediaQuery.of(context).size.height * 0.75,
         child: ListView.builder(
           itemBuilder: (ctx, index) {
-            return InkWell(
-              onTap: () {
-                setCarPref(carList[index].icon);
-                // fazer pagina onde se vai ver as fotos e assim  Image.asset(carList[index].icon)
-                Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => InfoPage())));
+            final item = carList[index];
+            return Dismissible(
+              key: Key(item.matricula),
+              background: Container(color: Colors.black38),
+              onDismissed: (direction) {
+                setState(() {
+                  carList.removeAt(index);
+                });
               },
-              child: Card(
-                  margin: EdgeInsets.all(4),
-                  elevation: 8,
-                  child: ListTile(
-                    leading:
-                        Text("get info"), //Image.asset(carList[index].icon),
-                    title: Text(
-                      carList[index].name,
-                      style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.blueGrey,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    subtitle: Text(
-                      carList[index].localization,
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black12,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    /*trailing: Text(
-                      carList[index].icon,
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black26,
-                          fontWeight: FontWeight.w400),
-                    ), // mudar isto ver embaixo*/
-                  )),
+              child: InkWell(
+                onTap: () {
+                  setCarPref(carList[index].icon);
+                  // fazer pagina onde se vai ver as fotos e assim  Image.asset(carList[index].icon)
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: ((context) => InfoPage())));
+                },
+                child: Card(
+                    margin: EdgeInsets.all(4),
+                    elevation: 8,
+                    child: ListTile(
+                      leading: Text(
+                        carList[index].name,
+                        style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      title: Text(
+                        carList[index].localization,
+                        style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      subtitle: Text(
+                        carList[index].matricula,
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black12,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      /*trailing: Text(
+                        carList[index].icon,
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black26,
+                            fontWeight: FontWeight.w400),
+                      ), // mudar isto ver embaixo*/
+                    )),
+              ),
             );
           },
           itemCount: carList.length,

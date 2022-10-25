@@ -67,6 +67,7 @@ class _AddCarDialogState extends State<AddCarDialog> {
     var iconController = TextEditingController();
     var nameController = TextEditingController();
     var localController = TextEditingController();
+    var plateController = TextEditingController();
 
     return Container(
       padding: EdgeInsets.all(8),
@@ -98,7 +99,7 @@ class _AddCarDialogState extends State<AddCarDialog> {
                     SizedBox(
                       width: 20,
                     ),
-                    Text('Pick an Image')
+                    Text('Take a picture')
                   ],
                 )),
             //buildTextfield('assets/images/blackcar.png', iconController),
@@ -107,6 +108,7 @@ class _AddCarDialogState extends State<AddCarDialog> {
               nameController,
             ),
             buildTextfield('Place', localController),
+            buildTextfield('Car Plate', plateController),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
@@ -114,7 +116,8 @@ class _AddCarDialogState extends State<AddCarDialog> {
                 final car = Car(
                     icon: _image != null ? _image!.path : null,
                     name: nameController.text,
-                    localization: localController.text);
+                    localization: localController.text,
+                    matricula: plateController.text);
 
                 widget.addCar(car);
                 Navigator.of(context).pop();
