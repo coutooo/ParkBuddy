@@ -62,9 +62,13 @@ class _InfoPageState extends State<InfoPage> {
             ),
           ),
           SizedBox(
-            width: 100,
+            width: 200,
           ),
-          Text("Localization"),
+          Text(
+            "Localization",
+            style: TextStyle(
+                fontSize: 22, color: Colors.black, fontWeight: FontWeight.w400),
+          ),
         ],
       ),
     );
