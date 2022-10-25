@@ -46,7 +46,6 @@ dependencies:
   hive: ^2.2.3
   jiffy: ^5.0.0
   hive_flutter: ^1.1.0
-  path_provider: ^2.0.2
   image_picker: ^0.8.6
   path_provider: ^2.0.11
   shared_preferences: ^2.0.15
