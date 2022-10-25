@@ -13,12 +13,11 @@ class InfoPage extends StatefulWidget {
 
 class _InfoPageState extends State<InfoPage> {
   var carImage;
-  var pos;
+  //var pos;
   @override
   void initState() {
     super.initState();
-    pos = _determinePosition();
-    print(pos.latitude.toString() + "posicaooooooooo");
+    //pos = _determinePosition();
     print("entreiiiiii");
     print(carImage.toString() + "carrrimageeeeeeee");
     setState(() {
