@@ -7,6 +7,5 @@ menu (park | share | statistics) -> definicoes ->
 pensei em "avisar se tem estacionameto ao lado" + hora
 
 
-sublinhar registernow e assim...
-mudar o sitio de clicar no botao sign in
-tirar back no menu
+maneira de apagar os carros no park
+
