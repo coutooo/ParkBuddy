@@ -131,11 +131,13 @@ class _InfoPageState extends State<InfoPage> {
           Text("latitude" + _latitude.toString()),
           Text("longitude" + _longitude.toString()),
           ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => MapSample2())));
+                    MaterialPageRoute(builder: ((context) => MapSample())));
               },
-              child: Text("See in map")),
+              child: Text("CHECK MAP")),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
