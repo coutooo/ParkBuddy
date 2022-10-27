@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
+import 'package:parkbuddy/Screens/map.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:geocoding/geocoding.dart';
 
@@ -13,27 +14,19 @@ class InfoPage extends StatefulWidget {
 
 class _InfoPageState extends State<InfoPage> {
   var carImage;
+  var _latitude;
+  var _longitude;
+  var _address;
   //var pos;
-  @override
-  void initState() {
-    super.initState();
-    //pos = _determinePosition();
-    print("entreiiiiii");
-    print(carImage.toString() + "carrrimageeeeeeee");
+
+  Future<void> _updatePosition() async {
+    Position pos = await _determinePosition();
+    List pm = await placemarkFromCoordinates(pos.latitude, pos.longitude);
     setState(() {
-      print(carImage.toString() + "22222222");
-      carImage = getCarPref();
+      _latitude = pos.latitude.toString();
+      _longitude = pos.longitude.toString();
+      _address = pm[0].toString();
     });
-  }
-
-  Future<Image> getCarPref() async {
-    // Obtain shared preferences.
-    final prefs = await SharedPreferences.getInstance();
-    // Try reading data from the 'action' key. If it doesn't exist, returns null.
-    carImage = prefs.getString('imagePath');
-    print("carImageeee" + carImage.toString());
-
-    return Image.asset(carImage);
   }
 
   /// Determine the current position of the device.
@@ -78,6 +71,29 @@ class _InfoPageState extends State<InfoPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    //pos = _determinePosition();
+    print("entreiiiiii");
+    _updatePosition();
+    print(carImage.toString() + "carrrimageeeeeeee");
+    setState(() {
+      print(carImage.toString() + "22222222");
+      carImage = getCarPref();
+    });
+  }
+
+  Future<Image> getCarPref() async {
+    // Obtain shared preferences.
+    final prefs = await SharedPreferences.getInstance();
+    // Try reading data from the 'action' key. If it doesn't exist, returns null.
+    carImage = prefs.getString('imagePath');
+    print("carImageeee" + carImage.toString());
+
+    return Image.asset(carImage);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -112,6 +128,34 @@ class _InfoPageState extends State<InfoPage> {
             style: TextStyle(
                 fontSize: 22, color: Colors.black, fontWeight: FontWeight.w400),
           ),
+          Text("latitude" + _latitude.toString()),
+          Text("longitude" + _longitude.toString()),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => MapSample2())));
+              },
+              child: Text("See in map")),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
+              onPressed: (() {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text('Address'),
+                    content: Text("" + _address.toString()),
+                    actions: [
+                      TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text("OK"))
+                    ],
+                  ),
+                );
+              }),
+              child: Text(
+                "INFO",
+              ))
         ],
       ),
     );

@@ -4,6 +4,8 @@
         android:label="parkbuddy"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB1Tj70zo5qtmp1s0mtdLjJs3IAZCsNdS0"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
