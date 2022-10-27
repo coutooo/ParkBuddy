@@ -16,6 +16,21 @@ class MapSampleState extends State<MapSample> {
     zoom: 14.4746,
   );
 
+  // fazer um marker
+  static final Marker _kGooglePlexMarker = Marker(
+      markerId: MarkerId('_kGooglePlex'),
+      infoWindow: InfoWindow(title: 'Google Plex'),
+      icon: BitmapDescriptor.defaultMarker,
+      position: LatLng(37.43296265331129, -122.08832357078792));
+
+  static final Marker _Marker2 = Marker(
+      markerId: MarkerId('Marker2'),
+      infoWindow: InfoWindow(title: '~Marker2'),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+      position: LatLng(37.42796265331129, -122.08532357078792));
+
+  // https://youtu.be/tfFByL7F-00?t=472   vou aqki
+
   static final CameraPosition _kLake = CameraPosition(
       bearing: 192.8334901395799,
       target: LatLng(37.43296265331129, -122.08832357078792),
@@ -31,6 +46,10 @@ class MapSampleState extends State<MapSample> {
       ),
       body: GoogleMap(
         mapType: MapType.hybrid,
+        markers: {
+          _kGooglePlexMarker,
+          _Marker2,
+        },
         initialCameraPosition: _kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
