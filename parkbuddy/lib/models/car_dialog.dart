@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'cars.dart';
@@ -17,6 +18,15 @@ class AddCarDialog extends StatefulWidget {
 }
 
 class _AddCarDialogState extends State<AddCarDialog> {
+  //reference created box
+  final _myBox = Hive.box('mybox');
+
+  //write data
+  void writeData(Car car) {
+    _myBox.put(1, car);
+    print(_myBox.get(1));
+  }
+
   File? _image;
 
   Future getImage() async {

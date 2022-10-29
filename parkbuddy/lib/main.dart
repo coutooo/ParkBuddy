@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:parkbuddy/Screens/Welcome/login_page.dart';
+import 'package:parkbuddy/models/cars.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //await Firebase.initializeApp();
+
+  //Initialize Hive
+  await Hive.initFlutter();
+  Hive.registerAdapter(CarAdapter());
+
+  //open the box (hive)
+  var box = await Hive.openBox('mybox');
 
   runApp(const MyApp());
 }
