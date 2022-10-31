@@ -6,7 +6,9 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:skeletons/skeletons.dart';
 import 'cars.dart';
 import 'package:path/path.dart';
 
@@ -20,6 +22,7 @@ class AddCarDialog extends StatefulWidget {
 }
 
 class _AddCarDialogState extends State<AddCarDialog> {
+  late bool _isLoading;
   var _latitude;
   var _longitude;
   var _address;
@@ -27,11 +30,10 @@ class _AddCarDialogState extends State<AddCarDialog> {
   Future<void> _updatePosition() async {
     Position pos = await _determinePosition();
     List pm = await placemarkFromCoordinates(pos.latitude, pos.longitude);
-    setState(() {
-      _latitude = pos.latitude.toString();
-      _longitude = pos.longitude.toString();
-      _address = pm[0].toString();
-    });
+
+    _latitude = pos.latitude.toString();
+    _longitude = pos.longitude.toString();
+    _address = pm[0].toString();
   }
 
   /// Determine the current position of the device.
@@ -77,6 +79,12 @@ class _AddCarDialogState extends State<AddCarDialog> {
 
   @override
   void initState() {
+    _isLoading = true;
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        _isLoading = false;
+      });
+    });
     super.initState();
     _updatePosition();
   }
@@ -137,9 +145,7 @@ class _AddCarDialogState extends State<AddCarDialog> {
       );
     }
 
-    var iconController = TextEditingController();
     var nameController = TextEditingController();
-    var localController = TextEditingController();
     var plateController = TextEditingController();
 
     return Container(
@@ -147,59 +153,64 @@ class _AddCarDialogState extends State<AddCarDialog> {
       height: 350,
       width: 400,
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Text(
-              "Add Car",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 32,
-                color: Color.fromRGBO(160, 5, 10, 40),
-              ),
-            ),
-
-            // https://youtu.be/IePaAGXzmtU?t=1   <- image picker
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(160, 5, 10, 40),
+        child: Skeleton(
+          isLoading: _isLoading,
+          skeleton: Container(
+              child: LoadingAnimationWidget.horizontalRotatingDots(
+                  color: Color.fromRGBO(160, 5, 10, 40), size: 80)),
+          child: Column(
+            children: [
+              Text(
+                "Add Car",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 32,
+                  color: Color.fromRGBO(160, 5, 10, 40),
                 ),
-                onPressed: () {
-                  getImage();
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.image_outlined),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text('Take a picture')
-                  ],
-                )),
-            //buildTextfield('assets/images/blackcar.png', iconController),
-            buildTextfield(
-              'Car',
-              nameController,
-            ),
-            buildTextfield('Place', localController),
-            buildTextfield('Car Plate', plateController),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
-              onPressed: () {
-                final car = Car(
-                    icon: _image != null ? _image!.path : null,
-                    name: nameController.text,
-                    address: _address.toString(),
-                    matricula: plateController.text,
-                    latitude: _latitude.toString(),
-                    longitude: _longitude.toString());
+              ),
 
-                widget.addCar(car);
-                Navigator.of(context).pop();
-              },
-              child: Text("Add Car"),
-            ),
-          ],
+              // https://youtu.be/IePaAGXzmtU?t=1   <- image picker
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(160, 5, 10, 40),
+                  ),
+                  onPressed: () {
+                    getImage();
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.image_outlined),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text('Take a picture')
+                    ],
+                  )),
+              //buildTextfield('assets/images/blackcar.png', iconController),
+              buildTextfield(
+                'Car',
+                nameController,
+              ),
+              buildTextfield('Car Plate', plateController),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
+                onPressed: () {
+                  final car = Car(
+                      icon: _image != null ? _image!.path : null,
+                      name: nameController.text,
+                      address: _address.toString(),
+                      matricula: plateController.text,
+                      latitude: _latitude.toString(),
+                      longitude: _longitude.toString());
+
+                  widget.addCar(car);
+                  Navigator.of(context).pop();
+                },
+                child: Text("Add Car"),
+              ),
+            ],
+          ),
         ),
       ),
     );

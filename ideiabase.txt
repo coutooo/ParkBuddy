@@ -9,3 +9,6 @@ pensei em "avisar se tem estacionameto ao lado" + hora
 
 maneira de apagar os carros no park
 
+
+- quando metemos a foto apaga o texto nas caixas do dialog
+

@@ -52,6 +52,8 @@ dependencies:
   geolocator: ^9.0.2
   geocoding: ^2.0.5
   google_maps_flutter: ^2.2.1
+  skeletons: ^0.0.3
+  loading_animation_widget: ^1.2.0+3
 
 dev_dependencies:
   flutter_test:
