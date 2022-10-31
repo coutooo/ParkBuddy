@@ -73,12 +73,8 @@ class _InfoPageState extends State<InfoPage> {
   @override
   void initState() {
     super.initState();
-    //pos = _determinePosition();
-    print("entreiiiiii");
     _updatePosition();
-    print(carImage.toString() + "carrrimageeeeeeee");
     setState(() {
-      print(carImage.toString() + "22222222");
       carImage = getCarPref();
     });
   }

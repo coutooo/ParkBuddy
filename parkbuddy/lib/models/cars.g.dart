@@ -19,23 +19,29 @@ class CarAdapter extends TypeAdapter<Car> {
     return Car(
       icon: fields[0] as dynamic,
       name: fields[1] as String,
-      localization: fields[2] as String,
+      address: fields[2] as String,
       matricula: fields[3] as String,
+      latitude: fields[4] as String,
+      longitude: fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Car obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.icon)
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.localization)
+      ..write(obj.address)
       ..writeByte(3)
-      ..write(obj.matricula);
+      ..write(obj.matricula)
+      ..writeByte(4)
+      ..write(obj.latitude)
+      ..writeByte(5)
+      ..write(obj.longitude);
   }
 
   @override

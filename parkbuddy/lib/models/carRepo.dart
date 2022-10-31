@@ -5,12 +5,16 @@ class CarRepos {
     Car(
         icon: 'assets/images/yellowcard.png',
         name: "ferrari torrado",
-        localization: "aveiro",
-        matricula: "XX-XX-XX"),
+        address: "aveiro",
+        matricula: "XX-XX-XX",
+        latitude: "37",
+        longitude: "40"),
     Car(
         icon: 'assets/images/blackcar.png',
         name: "black carro",
-        localization: "Porto",
-        matricula: "YY-YY-YY"),
+        address: "Porto",
+        matricula: "YY-YY-YY",
+        latitude: "36",
+        longitude: "40"),
   ];
 }

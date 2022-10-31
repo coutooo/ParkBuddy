@@ -17,7 +17,7 @@ class ParkPage extends StatefulWidget {
 class _ParkPageState extends State<ParkPage> {
   //reference created box
 
-  final _myBox = Hive.box('mybox');
+  final _myBox = Hive.box('mybox2');
 
   //write data to db
   void writeData(Car car) {
@@ -105,7 +105,7 @@ class _ParkPageState extends State<ParkPage> {
                             fontWeight: FontWeight.w400),
                       ),
                       title: Text(
-                        _myBox.get(index).localization,
+                        _myBox.get(index).address,
                         style: TextStyle(
                             fontSize: 22,
                             color: Colors.blueGrey,

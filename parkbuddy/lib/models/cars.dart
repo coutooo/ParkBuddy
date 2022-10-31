@@ -9,13 +9,19 @@ class Car {
   @HiveField(1)
   final String name;
   @HiveField(2)
-  final String localization;
+  final String address;
   @HiveField(3)
   final String matricula;
+  @HiveField(4)
+  final String latitude;
+  @HiveField(5)
+  final String longitude;
 
   Car(
       {required this.icon,
       required this.name,
-      required this.localization,
-      required this.matricula});
+      required this.address,
+      required this.matricula,
+      required this.latitude,
+      required this.longitude});
 }

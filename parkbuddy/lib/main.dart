@@ -13,7 +13,7 @@ void main() async {
   Hive.registerAdapter(CarAdapter());
 
   //open the box (hive)
-  var box = await Hive.openBox('mybox');
+  var box = await Hive.openBox('mybox2');
 
   runApp(const MyApp());
 }
