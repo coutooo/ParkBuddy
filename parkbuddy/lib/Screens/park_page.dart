@@ -64,6 +64,7 @@ class _ParkPageState extends State<ParkPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromRGBO(160, 5, 10, 40),
         onPressed: () {
+          print(_myBox.length.toString() + "leng");
           showCarDialog();
         },
         child: Icon(Icons.add),
@@ -77,18 +78,21 @@ class _ParkPageState extends State<ParkPage> {
         height: MediaQuery.of(context).size.height * 0.75,
         child: ListView.builder(
           itemBuilder: (ctx, index) {
-            final item = _myBox.get(index);
+            final item = _myBox.getAt(index);
+            final int indexKey = item.key;
             return Dismissible(
-              key: Key(item.matricula),
+              key: Key(item
+                  .matricula), // matricula nao pode ser repetida se nao da erro
               background: Container(color: Colors.black38),
               onDismissed: (direction) {
                 setState(() {
-                  deleteData(index);
+                  print(_myBox.length.toString() + "leng");
+                  deleteData(indexKey);
                 });
               },
               child: InkWell(
                 onTap: () {
-                  setCarPref(index); // _myBox.get(index).icon
+                  setCarPref(indexKey); // _myBox.get(index).icon
                   // fazer pagina onde se vai ver as fotos e assim  Image.asset(carList[index].icon)
                   Navigator.push(context,
                       MaterialPageRoute(builder: ((context) => InfoPage())));
@@ -98,33 +102,26 @@ class _ParkPageState extends State<ParkPage> {
                     elevation: 8,
                     child: ListTile(
                       leading: Text(
-                        _myBox.get(index).name,
+                        _myBox.get(indexKey).name,
                         style: TextStyle(
                             fontSize: 22,
                             color: Colors.blueGrey,
                             fontWeight: FontWeight.w400),
                       ),
                       title: Text(
-                        _myBox.get(index).street,
+                        _myBox.get(indexKey).street,
                         style: TextStyle(
                             fontSize: 22,
                             color: Colors.blueGrey,
                             fontWeight: FontWeight.w400),
                       ),
                       subtitle: Text(
-                        _myBox.get(index).matricula,
+                        _myBox.get(indexKey).matricula,
                         style: TextStyle(
                             fontSize: 18,
                             color: Colors.black12,
                             fontWeight: FontWeight.w400),
                       ),
-                      /*trailing: Text(
-                        carList[index].icon,
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black26,
-                            fontWeight: FontWeight.w400),
-                      ), // mudar isto ver embaixo*/
                     )),
               ),
             );
@@ -134,17 +131,4 @@ class _ParkPageState extends State<ParkPage> {
       ),
     );
   }
-
-  /*ListView.separated(
-              itemBuilder: (BuildContext context, int pos) {
-                return ListTile(
-                  leading: Image.asset(cars[pos].icon),
-                  title: Text(cars[pos].name),
-                  trailing: Text(cars[pos].localization),
-                );
-              },
-              padding: EdgeInsets.all(16),
-              separatorBuilder: (_, __) => Divider(),
-              itemCount: cars.length),
-              */
 }

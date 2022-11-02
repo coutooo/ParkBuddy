@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 part 'cars.g.dart';
 
 @HiveType(typeId: 0)
-class Car {
+class Car extends HiveObject {
   @HiveField(0)
   var icon;
   @HiveField(1)

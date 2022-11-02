@@ -28,6 +28,8 @@ class _AddCarDialogState extends State<AddCarDialog> {
   var _address;
   var _street;
 
+  var freeplate = true;
+
   Future<void> _updatePosition() async {
     Position pos = await _determinePosition();
     List<Placemark> pm =
@@ -216,8 +218,24 @@ class _AddCarDialogState extends State<AddCarDialog> {
                       latitude: _latitude.toString(),
                       longitude: _longitude.toString());
 
-                  widget.addCar(car);
-                  Navigator.of(context).pop();
+                  for (int i = 0; i < _myBox.length; i++) {
+                    if (_myBox.getAt(i).matricula.toString() ==
+                        plateController.text) {
+                      freeplate = false;
+                    }
+                  }
+                  print(freeplate.toString() + "freeplate");
+                  if (freeplate == true) {
+                    widget.addCar(car);
+                    Navigator.of(context).pop();
+                  }
+                  if (freeplate == false) {
+                    freeplate = true;
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("This plate is already in use!"),
+                      backgroundColor: Colors.black,
+                    ));
+                  }
                 },
                 child: Text("Add Car"),
               ),
