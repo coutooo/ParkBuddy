@@ -16,6 +16,8 @@ class Car {
   final String latitude;
   @HiveField(5)
   final String longitude;
+  @HiveField(6)
+  final String street;
 
   Car(
       {required this.icon,
@@ -23,5 +25,6 @@ class Car {
       required this.address,
       required this.matricula,
       required this.latitude,
-      required this.longitude});
+      required this.longitude,
+      required this.street});
 }

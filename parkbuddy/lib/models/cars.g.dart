@@ -23,13 +23,14 @@ class CarAdapter extends TypeAdapter<Car> {
       matricula: fields[3] as String,
       latitude: fields[4] as String,
       longitude: fields[5] as String,
+      street: fields[6] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Car obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.icon)
       ..writeByte(1)
@@ -41,7 +42,9 @@ class CarAdapter extends TypeAdapter<Car> {
       ..writeByte(4)
       ..write(obj.latitude)
       ..writeByte(5)
-      ..write(obj.longitude);
+      ..write(obj.longitude)
+      ..writeByte(6)
+      ..write(obj.street);
   }
 
   @override

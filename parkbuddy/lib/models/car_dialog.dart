@@ -26,14 +26,25 @@ class _AddCarDialogState extends State<AddCarDialog> {
   var _latitude;
   var _longitude;
   var _address;
+  var _street;
 
   Future<void> _updatePosition() async {
     Position pos = await _determinePosition();
-    List pm = await placemarkFromCoordinates(pos.latitude, pos.longitude);
+    List<Placemark> pm =
+        await placemarkFromCoordinates(pos.latitude, pos.longitude);
 
     _latitude = pos.latitude.toString();
     _longitude = pos.longitude.toString();
-    _address = pm[0].toString();
+    _address = pm[0];
+    _street = "";
+    if (_address.administrativeArea != null) {
+      _street = _address.administrativeArea;
+    }
+    if (_address.subAdministrativeArea != null) {
+      _street = _street + ", " + _address.subAdministrativeArea;
+    }
+    if (_address.street != null)
+      _street = _street + "\nStreet: " + _address.street;
   }
 
   /// Determine the current position of the device.
@@ -200,6 +211,7 @@ class _AddCarDialogState extends State<AddCarDialog> {
                       icon: _image != null ? _image!.path : null,
                       name: nameController.text,
                       address: _address.toString(),
+                      street: _street.toString(),
                       matricula: plateController.text,
                       latitude: _latitude.toString(),
                       longitude: _longitude.toString());

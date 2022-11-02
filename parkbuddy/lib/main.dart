@@ -15,6 +15,8 @@ void main() async {
   //open the box (hive)
   var box = await Hive.openBox('mybox2');
 
+  box.clear();
+
   runApp(const MyApp());
 }
 

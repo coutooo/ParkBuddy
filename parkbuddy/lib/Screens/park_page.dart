@@ -51,12 +51,12 @@ class _ParkPageState extends State<ParkPage> {
       );
     }
 
-    Future<void> setCarPref(path) async {
+    Future<void> setCarPref(index) async {
       // Obtain shared preferences.
       final prefs = await SharedPreferences.getInstance();
       // Save an integer value to 'counter' key.
-      if (path != null) {
-        await prefs.setString('imagePath', path);
+      if (index != null) {
+        await prefs.setInt('index', index);
       }
     }
 
@@ -88,7 +88,7 @@ class _ParkPageState extends State<ParkPage> {
               },
               child: InkWell(
                 onTap: () {
-                  setCarPref(_myBox.get(index).icon);
+                  setCarPref(index); // _myBox.get(index).icon
                   // fazer pagina onde se vai ver as fotos e assim  Image.asset(carList[index].icon)
                   Navigator.push(context,
                       MaterialPageRoute(builder: ((context) => InfoPage())));
@@ -105,7 +105,7 @@ class _ParkPageState extends State<ParkPage> {
                             fontWeight: FontWeight.w400),
                       ),
                       title: Text(
-                        _myBox.get(index).address,
+                        _myBox.get(index).street,
                         style: TextStyle(
                             fontSize: 22,
                             color: Colors.blueGrey,

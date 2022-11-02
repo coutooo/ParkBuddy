@@ -1,9 +1,12 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 import 'package:parkbuddy/Screens/map.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:geocoding/geocoding.dart';
+
+import 'package:hive_flutter/hive_flutter.dart';
 
 class InfoPage extends StatefulWidget {
   const InfoPage({Key? key}) : super(key: key);
@@ -13,87 +16,51 @@ class InfoPage extends StatefulWidget {
 }
 
 class _InfoPageState extends State<InfoPage> {
+  final _myBox = Hive.box('mybox2');
+
   var carImage;
   var _latitude;
   var _longitude;
   var _address;
-  //var pos;
-
-  Future<void> _updatePosition() async {
-    Position pos = await _determinePosition();
-    List pm = await placemarkFromCoordinates(pos.latitude, pos.longitude);
-    setState(() {
-      _latitude = pos.latitude.toString();
-      _longitude = pos.longitude.toString();
-      _address = pm[0].toString();
-    });
-  }
-
-  /// Determine the current position of the device.
-  ///
-  /// When the location services are not enabled or permissions
-  /// are denied the `Future` will return an error.
-  Future<Position> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    // Test if location services are enabled.
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
-    return await Geolocator.getCurrentPosition();
-  }
+  var _indexCar;
 
   @override
   void initState() {
     super.initState();
-    _updatePosition();
     setState(() {
+      _indexCar = getCarIndex();
       carImage = getCarPref();
     });
+  }
+
+  Future<int> getCarIndex() async {
+    // Obtain shared preferences.
+    final prefs = await SharedPreferences.getInstance();
+    // Try reading data from the 'action' key. If it doesn't exist, returns null.
+    _indexCar = prefs.getInt('index');
+
+    return _indexCar;
   }
 
   Future<Image> getCarPref() async {
     // Obtain shared preferences.
     final prefs = await SharedPreferences.getInstance();
-    // Try reading data from the 'action' key. If it doesn't exist, returns null.
-    carImage = prefs.getString('imagePath');
-    print("carImageeee" + carImage.toString());
 
-    return Image.asset(carImage);
+    carImage = _myBox.get(_indexCar).icon;
+
+    if (carImage == null) {
+      return Image.asset(
+          'assets/images/blackcar.png'); // talvez mudar esta imagem (imagem de quanto nao se tira foto ao  carro)
+    } else {
+      return Image.asset(carImage);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Park"),
+        title: const Text("Info"),
         backgroundColor: Color.fromRGBO(160, 5, 10, 40),
       ),
       backgroundColor: Colors.grey[300],
@@ -105,6 +72,7 @@ class _InfoPageState extends State<InfoPage> {
               future: getCarPref(),
               builder: (BuildContext context, AsyncSnapshot<Image> image) {
                 if (image.hasData && carImage != null) {
+                  print(carImage);
                   return Image.file(
                     File(carImage),
                     width: 400,
@@ -117,23 +85,36 @@ class _InfoPageState extends State<InfoPage> {
             ),
           ),
           SizedBox(
-            width: 200,
+            height: 20,
           ),
           Text(
             "Localization",
             style: TextStyle(
                 fontSize: 22, color: Colors.black, fontWeight: FontWeight.w400),
           ),
-          Text("latitude" + _latitude.toString()),
-          Text("longitude" + _longitude.toString()),
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => MapSample())));
-              },
-              child: Text("CHECK MAP")),
+          FutureBuilder<int>(
+              future: getCarIndex(),
+              builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                if (snapshot.hasData) {
+                  return Text("" + _myBox.get(_indexCar).street);
+                } else {
+                  return Text("loading...");
+                }
+              }),
+          SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 80, 20, 10),
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: ((context) => MapSample())));
+                },
+                child: Text("CHECK MAP")),
+          ),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
@@ -142,7 +123,7 @@ class _InfoPageState extends State<InfoPage> {
                   context: context,
                   builder: (context) => AlertDialog(
                     title: Text('Address'),
-                    content: Text("" + _address.toString()),
+                    content: Text("" + _myBox.get(_indexCar).address),
                     actions: [
                       TextButton(
                           onPressed: () => Navigator.pop(context),
@@ -152,7 +133,7 @@ class _InfoPageState extends State<InfoPage> {
                 );
               }),
               child: Text(
-                "INFO",
+                "MORE INFO",
               ))
         ],
       ),
