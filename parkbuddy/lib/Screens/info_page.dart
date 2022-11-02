@@ -19,8 +19,8 @@ class _InfoPageState extends State<InfoPage> {
   final _myBox = Hive.box('mybox2');
 
   var carImage;
-  var _latitude;
-  var _longitude;
+  late double _latitude;
+  late double _longitude;
   var _address;
   var _indexCar;
 
@@ -47,6 +47,10 @@ class _InfoPageState extends State<InfoPage> {
     final prefs = await SharedPreferences.getInstance();
 
     carImage = _myBox.get(_indexCar).icon;
+
+    _latitude = double.parse(_myBox.get(_indexCar).latitude);
+    _longitude = double.parse(_myBox.get(_indexCar).longitude);
+    print(_latitude.toString() + "asdasda");
 
     if (carImage == null) {
       return Image.asset(
@@ -110,8 +114,13 @@ class _InfoPageState extends State<InfoPage> {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: ((context) => MapSample())));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => MapSample(
+                                carLat: _latitude,
+                                carLong: _longitude,
+                              ))));
                 },
                 child: Text("CHECK MAP")),
           ),

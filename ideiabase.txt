@@ -12,3 +12,6 @@ maneira de apagar os carros no park
 
 - quando metemos a foto apaga o texto nas caixas do dialog
 
+
+
+pegar nas coordenadas e meter nos markers!
