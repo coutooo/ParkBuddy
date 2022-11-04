@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:parkbuddy/Screens/qr_map.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class CreateScreen extends StatefulWidget {
@@ -8,7 +10,12 @@ class CreateScreen extends StatefulWidget {
 }
 
 class _CreateScreenState extends State<CreateScreen> {
-  String qrString = "ParkBuddy QRCODE hello prof";
+  String qrString = "";
+
+  final _myBox = Hive.box('mybox2');
+
+  late double _latitude;
+  late double _longitude;
 
   String scanned = "wait";
 
@@ -20,7 +27,13 @@ class _CreateScreenState extends State<CreateScreen> {
 
   Future<void> getUserData() async {
     setState(() {
-      //qrString = sp.getString("user_id")!;
+      _latitude = double.parse(_myBox.get(0).latitude);
+      _longitude = double.parse(_myBox.get(0).longitude);
+      qrString = _myBox.getAt(0).latitude +
+          " " +
+          _myBox.getAt(0).longitude +
+          " " +
+          _myBox.getAt(0).street;
     });
   }
 
@@ -69,7 +82,13 @@ class _CreateScreenState extends State<CreateScreen> {
           "#6a0dad", "Cancel", true, ScanMode.QR);
       setState(() {
         scanned = barcodeScanRes;
-        getUserScannedData();
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: ((context) => MapSample2(
+                      carLat: _latitude,
+                      carLong: _longitude,
+                    ))));
       });
       // });
     } catch (e) {
