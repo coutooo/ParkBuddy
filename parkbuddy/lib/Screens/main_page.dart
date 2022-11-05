@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:parkbuddy/Screens/Profile/profile_page.dart';
 import 'package:parkbuddy/Screens/park_page.dart';
 import 'package:parkbuddy/Screens/pedometer/pedometer_page.dart';
+import 'package:parkbuddy/Screens/qr_map.dart';
 import 'package:parkbuddy/Screens/qr_page.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:barcode_widget/barcode_widget.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -12,6 +15,35 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  late double _latitude;
+  late double _longitude;
+
+  String scanned = "wait";
+
+  Future<void> scanQR() async {
+    try {
+      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          "#6a0dad", "Cancel", true, ScanMode.QR);
+      print('TESTEEEEEEEEEE   -> ' + barcodeScanRes);
+      final split = barcodeScanRes.split(' ');
+      setState(() {
+        scanned = barcodeScanRes;
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: ((context) => MapSample2(
+                      carLat: double.parse(split[0]),
+                      carLong: double.parse(split[1]),
+                    ))));
+      });
+      // });
+    } catch (e) {
+      setState(() {
+        scanned = "unable to read the qr";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,8 +106,7 @@ class _MainPageState extends State<MainPage> {
             // share card
             InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => CreateScreen())));
+                scanQR();
               },
               child: Card(
                 elevation: 10,
@@ -93,7 +124,7 @@ class _MainPageState extends State<MainPage> {
                       width: 10,
                     ),
                     Text(
-                      'Share',
+                      'Scan QR',
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,

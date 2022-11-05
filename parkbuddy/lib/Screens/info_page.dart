@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 import 'package:parkbuddy/Screens/map.dart';
+import 'package:parkbuddy/Screens/qr_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:geocoding/geocoding.dart';
 
@@ -125,25 +126,42 @@ class _InfoPageState extends State<InfoPage> {
                 child: Text("CHECK MAP")),
           ),
           ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
-              onPressed: (() {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text('Address'),
-                    content: Text("" + _myBox.get(_indexCar).address),
-                    actions: [
-                      TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: Text("OK"))
-                    ],
-                  ),
-                );
-              }),
-              child: Text(
-                "MORE INFO",
-              ))
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
+            onPressed: (() {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text('Address'),
+                  content: Text("" + _myBox.get(_indexCar).address),
+                  actions: [
+                    TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text("OK"))
+                  ],
+                ),
+              );
+            }),
+            child: Text(
+              "MORE INFO",
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
+            onPressed: (() {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => CreateScreen(
+                            carLat: _latitude,
+                            carLong: _longitude,
+                          ))));
+            }),
+            child: Text(
+              "Share",
+            ),
+          )
         ],
       ),
     );
