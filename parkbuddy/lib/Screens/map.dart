@@ -49,8 +49,8 @@ class MapSampleState extends State<MapSample> {
   Future<void> _updatePosition() async {
     Position pos = await _determinePosition();
 
-    _latitude = pos.latitude;
-    _longitude = pos.longitude;
+    _latitude = await pos.latitude;
+    _longitude = await pos.longitude;
   }
 
   /// Determine the current position of the device.
@@ -108,11 +108,11 @@ class MapSampleState extends State<MapSample> {
       icon: BitmapDescriptor.defaultMarker,
       position: LatLng(carLat, carLong));
 
-  /*static final Marker _personMarker = Marker(
+  static late Marker _personMarker = Marker(
       markerId: MarkerId('Me'),
       infoWindow: InfoWindow(title: 'Me'),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-      position: LatLng(_latitude, _longitude));*/
+      position: LatLng(_latitude, _longitude));
 
   // https://youtu.be/tfFByL7F-00?t=472   vou aqki
 
@@ -127,7 +127,7 @@ class MapSampleState extends State<MapSample> {
         mapType: MapType.hybrid,
         markers: {
           _carMarker,
-          //_personMarker,
+          _personMarker,
         },
         initialCameraPosition: _kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
