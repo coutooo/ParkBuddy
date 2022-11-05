@@ -46,11 +46,13 @@ class MapSampleState extends State<MapSample> {
     return _indexCar;
   }
 
-  Future<void> _updatePosition() async {
+  Future<int> _updatePosition() async {
     Position pos = await _determinePosition();
 
     _latitude = await pos.latitude;
     _longitude = await pos.longitude;
+
+    return 1;
   }
 
   /// Determine the current position of the device.
@@ -108,7 +110,7 @@ class MapSampleState extends State<MapSample> {
       icon: BitmapDescriptor.defaultMarker,
       position: LatLng(carLat, carLong));
 
-  static late Marker _personMarker = Marker(
+  static final Marker _personMarker = Marker(
       markerId: MarkerId('Me'),
       infoWindow: InfoWindow(title: 'Me'),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
@@ -123,15 +125,25 @@ class MapSampleState extends State<MapSample> {
         title: const Text("Map"),
         backgroundColor: Color.fromRGBO(160, 5, 10, 40),
       ),
-      body: GoogleMap(
-        mapType: MapType.hybrid,
-        markers: {
-          _carMarker,
-          _personMarker,
-        },
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
+      body: FutureBuilder(
+        future: _updatePosition(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (!snapshot.hasData) {
+            print(snapshot);
+            return (Center(child: CircularProgressIndicator()));
+          } else {
+            return GoogleMap(
+              mapType: MapType.hybrid,
+              markers: {
+                _carMarker,
+                _personMarker,
+              },
+              initialCameraPosition: _kGooglePlex,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+            );
+          }
         },
       ),
     );
