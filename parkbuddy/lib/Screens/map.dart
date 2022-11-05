@@ -114,8 +114,14 @@ class MapSampleState extends State<MapSample> {
       markerId: MarkerId('Me'),
       infoWindow: InfoWindow(title: 'Me'),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-      position: LatLng(_latitude, _longitude));
+      position: LatLng(_latitude, _longitude + 0.1));
 
+// polyline
+  static final Polyline _kPolyline = Polyline(
+    polylineId: PolylineId('_kPolyline'),
+    points: [_carMarker.position, _personMarker.position],
+    width: 5,
+  );
   // https://youtu.be/tfFByL7F-00?t=472   vou aqki
 
   @override
@@ -129,7 +135,6 @@ class MapSampleState extends State<MapSample> {
         future: _updatePosition(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (!snapshot.hasData) {
-            print(snapshot);
             return (Center(child: CircularProgressIndicator()));
           } else {
             return GoogleMap(
@@ -137,6 +142,9 @@ class MapSampleState extends State<MapSample> {
               markers: {
                 _carMarker,
                 _personMarker,
+              },
+              polylines: {
+                _kPolyline,
               },
               initialCameraPosition: _kGooglePlex,
               onMapCreated: (GoogleMapController controller) {
