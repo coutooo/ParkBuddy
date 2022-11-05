@@ -5,6 +5,11 @@ import 'package:parkbuddy/Screens/qr_map.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class CreateScreen extends StatefulWidget {
+  final double carLat;
+  final double carLong;
+
+  const CreateScreen({Key? key, required this.carLat, required this.carLong})
+      : super(key: key);
   @override
   _CreateScreenState createState() => _CreateScreenState();
 }
@@ -12,28 +17,20 @@ class CreateScreen extends StatefulWidget {
 class _CreateScreenState extends State<CreateScreen> {
   String qrString = "";
 
-  final _myBox = Hive.box('mybox2');
-
-  late double _latitude;
-  late double _longitude;
-
-  String scanned = "wait";
+  static late double carLong;
+  static late double carLat;
 
   @override
   void initState() {
+    carLat = widget.carLat;
+    carLong = widget.carLong;
     super.initState();
     getUserData();
   }
 
   Future<void> getUserData() async {
     setState(() {
-      _latitude = double.parse(_myBox.get(0).latitude);
-      _longitude = double.parse(_myBox.get(0).longitude);
-      qrString = _myBox.getAt(0).latitude +
-          " " +
-          _myBox.getAt(0).longitude +
-          " " +
-          _myBox.getAt(0).street;
+      qrString = carLat.toString() + " " + carLong.toString();
     });
   }
 
@@ -56,17 +53,6 @@ class _CreateScreenState extends State<CreateScreen> {
             width: 250,
             barcode: Barcode.qrCode(),
           ),
-          ElevatedButton(
-            onPressed: () {
-              scanQR();
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor:
-                  Color.fromRGBO(160, 5, 10, 40), // Background color
-              foregroundColor: Colors.white, // Text Color (Foreground color)
-            ),
-            child: Text("Scan QR"),
-          ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
           ),
@@ -74,29 +60,4 @@ class _CreateScreenState extends State<CreateScreen> {
       ),
     );
   }
-
-  Future<void> scanQR() async {
-    //print("entrei");
-    try {
-      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          "#6a0dad", "Cancel", true, ScanMode.QR);
-      setState(() {
-        scanned = barcodeScanRes;
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: ((context) => MapSample2(
-                      carLat: _latitude,
-                      carLong: _longitude,
-                    ))));
-      });
-      // });
-    } catch (e) {
-      setState(() {
-        scanned = "unable to read the qr";
-      });
-    }
-  }
-
-  Future<void> getUserScannedData() async {}
 }
