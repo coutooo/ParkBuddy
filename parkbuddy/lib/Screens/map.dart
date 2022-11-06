@@ -123,21 +123,29 @@ class MapSampleState extends State<MapSample> {
       LatLng origin, LatLng destination) async {
     // AIzaSyCDzvKYkIZ1WSIk-V3uryzZUaNMuG908Jc    directions API
 
-    List<Placemark> origin1 =
+    /*List<Placemark> origin1 =
         await placemarkFromCoordinates(origin.latitude, origin.longitude);
 
     List<Placemark> destination1 = await placemarkFromCoordinates(
         destination.latitude, destination.longitude);
 
-    var originD = origin1[0].subAdministrativeArea;
+    var originD = origin1[0].street;
 
-    var destinationD = destination1[0].subAdministrativeArea;
+    var destinationD = destination1[0].street;
+    */
 
-    //print(originD);
+    var mode = 'walking';
+    var originD =
+        origin.latitude.toString() + ',' + origin.longitude.toString();
+    var destinationD = destination.latitude.toString() +
+        ',' +
+        destination.longitude.toString();
+    print(originD);
+    print(destinationD);
 
     var key = 'AIzaSyCDzvKYkIZ1WSIk-V3uryzZUaNMuG908Jc';
     final String url =
-        'https://maps.googleapis.com/maps/api/directions/json?origin=$originD&destination=$destinationD&key=$key';
+        'https://maps.googleapis.com/maps/api/directions/json?origin=$originD&destination=$destinationD&key=$key&mode=$mode';
     var response = await http.get(Uri.parse(url));
     var json = convert.jsonDecode(response.body);
 
@@ -223,15 +231,17 @@ class MapSampleState extends State<MapSample> {
               icon: Icon(Icons.search),
             ),*/
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Color.fromRGBO(160, 5, 10, 40),
         onPressed: () async {
           var directions = await getDirections(
               LatLng(carLat, carLong), LatLng(_latitude, _longitude + 0.1));
 
           _setPolyline(directions['polyline_decoded']);
         },
-        label: Text('Directions'),
-        icon: Icon(Icons.card_travel),
+        label: Text('GET PATH'),
+        icon: Icon(Icons.directions_walk),
       ),
     );
   }
