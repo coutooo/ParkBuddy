@@ -69,7 +69,7 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
               SizedBox(
-                height: 75,
+                height: 50,
               ),
               // park card
               InkWell(

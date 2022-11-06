@@ -8,6 +8,8 @@ import 'package:hive/hive.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skeletons/skeletons.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 
 class MapSample extends StatefulWidget {
   final double carLat;
@@ -33,6 +35,7 @@ class MapSampleState extends State<MapSample> {
     carLong = widget.carLong;
     _indexCar = getCarIndex();
     _updatePosition();
+    //getDirections(LatLng(carLat, carLong), LatLng(_latitude, _longitude + 0.1));
     super.initState();
   }
 
@@ -96,6 +99,19 @@ class MapSampleState extends State<MapSample> {
     return await Geolocator.getCurrentPosition();
   }
 
+  Future<void> getDirections(LatLng origin, LatLng destination) async {
+    // AIzaSyCDzvKYkIZ1WSIk-V3uryzZUaNMuG908Jc    directions API
+    var key = 'AIzaSyCDzvKYkIZ1WSIk-V3uryzZUaNMuG908Jc';
+    final String url =
+        'https://maps.googleapis.com/maps/api/directions/json?origin=$origin&destination=$destination&key=$key';
+    var response = await http.get(Uri.parse(url));
+    var json = convert.jsonDecode(response.body);
+
+    // https://youtu.be/tfFByL7F-00?t=1663
+
+    print(json);
+  }
+
   Completer<GoogleMapController> _controller = Completer();
 
   static final CameraPosition _kGooglePlex = CameraPosition(
@@ -131,28 +147,45 @@ class MapSampleState extends State<MapSample> {
         title: const Text("Map"),
         backgroundColor: Color.fromRGBO(160, 5, 10, 40),
       ),
-      body: FutureBuilder(
-        future: _updatePosition(),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (!snapshot.hasData) {
-            return (Center(child: CircularProgressIndicator()));
-          } else {
-            return GoogleMap(
-              mapType: MapType.hybrid,
-              markers: {
-                _carMarker,
-                _personMarker,
+      body: Container(
+        child: FutureBuilder(
+          future: _updatePosition(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (!snapshot.hasData) {
+              return (Center(child: CircularProgressIndicator()));
+            } else {
+              return GoogleMap(
+                mapType: MapType.hybrid,
+                markers: {
+                  _carMarker,
+                  _personMarker,
+                },
+                polylines: {
+                  _kPolyline,
+                },
+                initialCameraPosition: _kGooglePlex,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
+              );
+            }
+          },
+        ),
+        /*IconButton(
+              onPressed: () async {
+                getDirections(LatLng(carLat, carLong),
+                    LatLng(_latitude, _longitude + 0.1));
               },
-              polylines: {
-                _kPolyline,
-              },
-              initialCameraPosition: _kGooglePlex,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-              },
-            );
-          }
+              icon: Icon(Icons.search),
+            ),*/
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async {
+          getDirections(
+              LatLng(carLat, carLong), LatLng(_latitude, _longitude + 0.1));
         },
+        label: Text('Directions'),
+        icon: Icon(Icons.card_travel),
       ),
     );
   }

@@ -54,6 +54,8 @@ dependencies:
   google_maps_flutter: ^2.2.1
   skeletons: ^0.0.3
   loading_animation_widget: ^1.2.0+3
+  http: ^0.13.5
+  google_directions_api: ^0.9.1
 
 dev_dependencies:
   flutter_test:
