@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -29,6 +30,10 @@ class MapSampleState extends State<MapSample> {
   static var _latitude;
   static var _longitude;
 
+  Set<Polyline> _polylines = Set<Polyline>();
+
+  int _polylineIdCounter = 1;
+
   @override
   void initState() {
     carLat = widget.carLat;
@@ -37,6 +42,21 @@ class MapSampleState extends State<MapSample> {
     _updatePosition();
     //getDirections(LatLng(carLat, carLong), LatLng(_latitude, _longitude + 0.1));
     super.initState();
+  }
+
+  void _setPolyline(List<PointLatLng> points) {
+    final String polylineIdVal = 'polyline_$_polylineIdCounter';
+    _polylineIdCounter++;
+    setState(() {
+      _polylines.add(Polyline(
+        polylineId: PolylineId(polylineIdVal),
+        width: 2,
+        color: Colors.blue,
+        points: points
+            .map((point) => LatLng(point.latitude, point.longitude))
+            .toList(),
+      ));
+    });
   }
 
   Future<int> getCarIndex() async {
@@ -99,17 +119,43 @@ class MapSampleState extends State<MapSample> {
     return await Geolocator.getCurrentPosition();
   }
 
-  Future<void> getDirections(LatLng origin, LatLng destination) async {
+  Future<Map<String, dynamic>> getDirections(
+      LatLng origin, LatLng destination) async {
     // AIzaSyCDzvKYkIZ1WSIk-V3uryzZUaNMuG908Jc    directions API
+
+    List<Placemark> origin1 =
+        await placemarkFromCoordinates(origin.latitude, origin.longitude);
+
+    List<Placemark> destination1 = await placemarkFromCoordinates(
+        destination.latitude, destination.longitude);
+
+    var originD = origin1[0].subAdministrativeArea;
+
+    var destinationD = destination1[0].subAdministrativeArea;
+
+    //print(originD);
+
     var key = 'AIzaSyCDzvKYkIZ1WSIk-V3uryzZUaNMuG908Jc';
     final String url =
-        'https://maps.googleapis.com/maps/api/directions/json?origin=$origin&destination=$destination&key=$key';
+        'https://maps.googleapis.com/maps/api/directions/json?origin=$originD&destination=$destinationD&key=$key';
     var response = await http.get(Uri.parse(url));
     var json = convert.jsonDecode(response.body);
 
-    // https://youtu.be/tfFByL7F-00?t=1663
+    var results = {
+      'bounds_ne': json['routes'][0]['bounds']['northeast'],
+      'bounds_sw': json['routes'][0]['bounds']['southwest'],
+      'start_location': json['routes'][0]['legs'][0]['start_location'],
+      'end_location': json['routes'][0]['legs'][0]['end_location'],
+      'polyline': json['routes'][0]['overview_polyline']['points'],
+      'polyline_decoded': PolylinePoints()
+          .decodePolyline(json['routes'][0]['overview_polyline']['points']),
+    };
 
-    print(json);
+    // https://youtu.be/tfFByL7F-00?t=1726
+
+    print(results);
+
+    return results;
   }
 
   Completer<GoogleMapController> _controller = Completer();
@@ -160,9 +206,7 @@ class MapSampleState extends State<MapSample> {
                   _carMarker,
                   _personMarker,
                 },
-                polylines: {
-                  _kPolyline,
-                },
+                polylines: _polylines,
                 initialCameraPosition: _kGooglePlex,
                 onMapCreated: (GoogleMapController controller) {
                   _controller.complete(controller);
@@ -181,8 +225,10 @@ class MapSampleState extends State<MapSample> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          getDirections(
+          var directions = await getDirections(
               LatLng(carLat, carLong), LatLng(_latitude, _longitude + 0.1));
+
+          _setPolyline(directions['polyline_decoded']);
         },
         label: Text('Directions'),
         icon: Icon(Icons.card_travel),
