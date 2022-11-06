@@ -62,15 +62,16 @@ class _MainPageState extends State<MainPage> {
               //logo
               Transform.scale(
                 scale: 0.75,
-                child: Image(
-                  image: AssetImage(
-                    'assets/images/logo-no-background.png',
+                child: Padding(
+                  padding: const EdgeInsets.all(30),
+                  child: Image(
+                    image: AssetImage(
+                      'assets/images/logo-no-background.png',
+                    ),
                   ),
                 ),
               ),
-              SizedBox(
-                height: 50,
-              ),
+
               // park card
               InkWell(
                 onTap: () {

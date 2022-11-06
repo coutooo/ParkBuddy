@@ -69,100 +69,122 @@ class _InfoPageState extends State<InfoPage> {
         backgroundColor: Color.fromRGBO(160, 5, 10, 40),
       ),
       backgroundColor: Colors.grey[300],
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(70, 20, 70, 0),
-            child: FutureBuilder(
-              future: getCarPref(),
-              builder: (BuildContext context, AsyncSnapshot<Image> image) {
-                if (image.hasData && carImage != null) {
-                  print(carImage);
-                  return Image.file(
-                    File(carImage),
-                    width: 400,
-                  ); // image is ready
-                } else {
-                  return new Image.asset(
-                      'assets/images/blackcar.png'); // placeholder  assets/images/blackcar.png'
-                }
-              },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(70, 20, 70, 0),
+              child: FutureBuilder(
+                future: getCarPref(),
+                builder: (BuildContext context, AsyncSnapshot<Image> image) {
+                  if (image.hasData && carImage != null) {
+                    print(carImage);
+                    return Image.file(
+                      File(carImage),
+                      width: 400,
+                    ); // image is ready
+                  } else {
+                    return new Image.asset(
+                        'assets/images/blackcar.png'); // placeholder  assets/images/blackcar.png'
+                  }
+                },
+              ),
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(
-            "Localization",
-            style: TextStyle(
-                fontSize: 22, color: Colors.black, fontWeight: FontWeight.w400),
-          ),
-          FutureBuilder<int>(
-              future: getCarIndex(),
-              builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-                if (snapshot.hasData) {
-                  return Text("" + _myBox.get(_indexCar).street);
-                } else {
-                  return Text("loading...");
-                }
-              }),
-          SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 80, 20, 10),
-            child: ElevatedButton(
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              "Localization",
+              style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400),
+            ),
+            FutureBuilder<int>(
+                future: getCarIndex(),
+                builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                  if (snapshot.hasData) {
+                    return Text("" + _myBox.get(_indexCar).street);
+                  } else {
+                    return Text("loading...");
+                  }
+                }),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 80, 20, 0),
+              child: SizedBox(
+                height: 30,
+                width: 300,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => MapSample(
+                                    carLat: _latitude,
+                                    carLong: _longitude,
+                                  ))));
+                    },
+                    child: Text("CHECK MAP")),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              height: 30,
+              width: 300,
+              child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
-                onPressed: () {
+                onPressed: (() {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: ((context) => MapSample(
+                          builder: ((context) => CreateScreen(
                                 carLat: _latitude,
                                 carLong: _longitude,
                               ))));
-                },
-                child: Text("CHECK MAP")),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
-            onPressed: (() {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text('Address'),
-                  content: Text("" + _myBox.get(_indexCar).address),
-                  actions: [
-                    TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: Text("OK"))
-                  ],
+                }),
+                child: Text(
+                  "Share",
                 ),
-              );
-            }),
-            child: Text(
-              "MORE INFO",
+              ),
             ),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
-            onPressed: (() {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: ((context) => CreateScreen(
-                            carLat: _latitude,
-                            carLong: _longitude,
-                          ))));
-            }),
-            child: Text(
-              "Share",
+            SizedBox(
+              height: 20,
             ),
-          )
-        ],
+            SizedBox(
+              height: 30,
+              width: 300,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(160, 5, 10, 40)),
+                onPressed: (() {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text('Address'),
+                      content: Text("" + _myBox.get(_indexCar).address),
+                      actions: [
+                        TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text("OK"))
+                      ],
+                    ),
+                  );
+                }),
+                child: Text(
+                  "MORE INFO",
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
