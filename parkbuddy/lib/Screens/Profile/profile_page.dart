@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:parkbuddy/Screens/Welcome/register_page.dart';
 import 'package:parkbuddy/Screens/main_page.dart';
 import 'package:parkbuddy/Screens/qr_page.dart';
@@ -14,6 +15,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    final _histBox = Hive.box('hist_box');
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile"),
@@ -83,7 +85,7 @@ class ProfilePage extends StatelessWidget {
                             right: 0,
                             child: Center(
                               child: Container(
-                                width: inWidth * 0.49,
+                                width: inWidth * 0.43,
                                 child: Image.asset(
                                   'assets/images/profile.png',
                                   fit: BoxFit.fitWidth,
@@ -123,35 +125,47 @@ class ProfilePage extends StatelessWidget {
                         Divider(
                           thickness: 2.5,
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          height: height * 0.15,
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          height: height * 0.15,
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          height: height * 0.15,
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
+                        ListView.separated(
+                          itemBuilder: (ctx, index) {
+                            print(_histBox.get(index));
+                            final item = _histBox.getAt(index).split('ç');
+                            return Container(
+                              height: height * 0.15,
+                              decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    item[0],
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Matricula: " + item[1],
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Carro: " + item[2],
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) => Divider(),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: _histBox.length,
                         ),
                         SizedBox(
                           height: 10,

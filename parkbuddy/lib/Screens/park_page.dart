@@ -18,11 +18,14 @@ class _ParkPageState extends State<ParkPage> {
   //reference created box
 
   final _myBox = Hive.box('mybox2');
+  final _histBox = Hive.box('hist_box');
 
   //write data to db
   void writeData(Car car) {
     print(_myBox.length);
     _myBox.put(_myBox.length, car);
+
+    _histBox.add(car.street + "ç" + car.matricula + "ç" + car.name);
   }
 
   //Delete data from db
