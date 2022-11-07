@@ -175,6 +175,39 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+              if (!showBiometric)
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => MainPage())));
+                    },
+                    child: Container(
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(160, 5, 10, 40),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Center(
+                            child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => MainPage())));
+                          },
+                          child: Text('Sign In',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              )),
+                        ))),
+                  ),
+                ),
               SizedBox(
                 height: 10,
               ),
