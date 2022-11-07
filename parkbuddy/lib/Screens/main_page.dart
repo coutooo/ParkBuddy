@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:parkbuddy/Screens/Profile/profile_page.dart';
 import 'package:parkbuddy/Screens/park_page.dart';
@@ -6,6 +8,9 @@ import 'package:parkbuddy/Screens/qr_map.dart';
 import 'package:parkbuddy/Screens/qr_page.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:proximity_sensor/proximity_sensor.dart';
+import 'package:screen_brightness/screen_brightness.dart';
+import 'package:flutter/foundation.dart' as foundation;
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -19,6 +24,55 @@ class _MainPageState extends State<MainPage> {
   late double _longitude;
 
   String scanned = "wait";
+
+  @override
+  void initState() {
+    super.initState();
+    listenSensor();
+    setBrightness(1);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _streamSubscription.cancel();
+  }
+
+  late StreamSubscription<dynamic> _streamSubscription;
+
+  Future<void> setBrightness(double brightness) async {
+    try {
+      await ScreenBrightness().setScreenBrightness(brightness);
+    } catch (e) {
+      debugPrint(e.toString());
+      throw 'Failed to set brightness';
+    }
+  }
+
+  Future<void> resetBrightness() async {
+    try {
+      await ScreenBrightness().resetScreenBrightness();
+    } catch (e) {
+      debugPrint(e.toString());
+      throw 'Failed to reset brightness';
+    }
+  }
+
+  Future<void> listenSensor() async {
+    FlutterError.onError = (FlutterErrorDetails details) {
+      if (foundation.kDebugMode) {
+        FlutterError.dumpErrorToConsole(details);
+      }
+    };
+    _streamSubscription = ProximitySensor.events.listen((int event) {
+      debugPrint(event.toString());
+      if (event > 0) {
+        setBrightness(0);
+      } else {
+        setBrightness(1);
+      }
+    });
+  }
 
   Future<void> scanQR() async {
     try {

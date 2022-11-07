@@ -58,6 +58,9 @@ dependencies:
   google_directions_api: ^0.9.1
   flutter_polyline_points: ^1.0.0
   local_auth: ^2.1.2
+  screen_brightness: ^0.2.2
+  proximity_sensor: ^1.0.4
+  foundation_flutter: ^0.2.0
 
 dev_dependencies:
   flutter_test:
