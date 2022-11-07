@@ -184,7 +184,7 @@ class MapSampleState extends State<MapSample> {
       markerId: MarkerId('Me'),
       infoWindow: InfoWindow(title: 'Me'),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-      position: LatLng(_latitude, _longitude + 0.1));
+      position: LatLng(_latitude, _longitude));
 
 // polyline
   static final Polyline _kPolyline = Polyline(
@@ -223,20 +223,13 @@ class MapSampleState extends State<MapSample> {
             }
           },
         ),
-        /*IconButton(
-              onPressed: () async {
-                getDirections(LatLng(carLat, carLong),
-                    LatLng(_latitude, _longitude + 0.1));
-              },
-              icon: Icon(Icons.search),
-            ),*/
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Color.fromRGBO(160, 5, 10, 40),
         onPressed: () async {
           var directions = await getDirections(
-              LatLng(carLat, carLong), LatLng(_latitude, _longitude + 0.1));
+              LatLng(carLat, carLong), LatLng(_latitude, _longitude));
 
           _setPolyline(directions['polyline_decoded']);
         },

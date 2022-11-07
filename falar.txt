@@ -1,0 +1,22 @@
+sensores biometricos
+historico
+qr code
+camara
+lista carros 
+apagar carros
+mapa 
+marker eu e carro
+direcoes mapa/path
+sensor proximidade/brilho
+
+
+
+
+
+mudanças
+
+tirar +0.1 no mapa - done
+escrever imagem escrever no dialog
+problema a adicionar novos carros
+bug do scan
+historico infinito
