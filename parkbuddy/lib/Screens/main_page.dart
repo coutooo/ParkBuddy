@@ -7,6 +7,7 @@ import 'package:parkbuddy/Screens/pedometer/pedometer_page.dart';
 import 'package:parkbuddy/Screens/qr_map.dart';
 import 'package:parkbuddy/Screens/qr_page.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:parkbuddy/Screens/scan_page.dart';
 import 'package:proximity_sensor/proximity_sensor.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:flutter/foundation.dart' as foundation;
@@ -79,7 +80,7 @@ class _MainPageState extends State<MainPage> {
       print("olaaaaa");
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.QR);
-      print(barcodeScanRes.runtimeType.toString() + "typeeeeee");
+      print(barcodeScanRes.toString() + "typeeeeee");
       if (barcodeScanRes != "-1") {
         final split = barcodeScanRes.split(' ');
         setState(() {
@@ -170,7 +171,9 @@ class _MainPageState extends State<MainPage> {
               // share card
               InkWell(
                 onTap: () {
-                  scanQR();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: ((context) => ScanScreen())));
+                  //scanQR();
                 },
                 child: Card(
                   elevation: 10,

@@ -65,6 +65,7 @@ dependencies:
   foundation_flutter: ^0.2.0
   barcode_widget: ^2.0.3
   animated_text_kit: ^4.2.2
+  mobile_scanner: ^2.0.0
 
 dev_dependencies:
   flutter_test:
