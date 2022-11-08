@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:barcode_widget/barcode_widget.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:parkbuddy/Screens/qr_map.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class CreateScreen extends StatefulWidget {
   final double carLat;

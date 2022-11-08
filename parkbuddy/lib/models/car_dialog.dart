@@ -30,6 +30,9 @@ class _AddCarDialogState extends State<AddCarDialog> {
 
   var freeplate = true;
 
+  var nameController = TextEditingController();
+  var plateController = TextEditingController();
+
   Future<void> _updatePosition() async {
     Position pos = await _determinePosition();
     List<Placemark> pm =
@@ -113,7 +116,9 @@ class _AddCarDialogState extends State<AddCarDialog> {
 
   File? _image;
 
-  Future getImage() async {
+  Future getImage(var tmp1, var tmp2) async {
+    nameController = tmp1;
+    plateController = tmp2;
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.camera);
       if (image == null) return;
@@ -158,9 +163,6 @@ class _AddCarDialogState extends State<AddCarDialog> {
       );
     }
 
-    var nameController = TextEditingController();
-    var plateController = TextEditingController();
-
     return Container(
       padding: EdgeInsets.all(8),
       height: 350,
@@ -188,7 +190,9 @@ class _AddCarDialogState extends State<AddCarDialog> {
                     backgroundColor: Color.fromRGBO(160, 5, 10, 40),
                   ),
                   onPressed: () {
-                    getImage();
+                    var tmp1 = nameController;
+                    var tmp2 = plateController;
+                    getImage(tmp1, tmp2);
                   },
                   child: Row(
                     children: [

@@ -16,7 +16,7 @@ sensor proximidade/brilho
 mudanças
 
 tirar +0.1 no mapa - done
-escrever imagem escrever no dialog
+escrever imagem escrever no dialog - done
 problema a adicionar novos carros
 bug do scan
 historico infinito

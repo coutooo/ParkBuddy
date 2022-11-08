@@ -39,7 +39,6 @@ dependencies:
   google_fonts: ^2.1.1
   flutter_svg: ^1.1.5
   flutter_barcode_scanner: ^2.0.0
-  barcode_widget: ^2.0.2
   pedometer: ^3.0.0
   firebase_auth: ^3.11.2
   flutter_launcher_icons: ^0.10.0
@@ -61,6 +60,7 @@ dependencies:
   screen_brightness: ^0.2.2
   proximity_sensor: ^1.0.4
   foundation_flutter: ^0.2.0
+  barcode_widget: ^2.0.3
 
 dev_dependencies:
   flutter_test:
