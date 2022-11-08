@@ -54,6 +54,7 @@ class _ScanScreenState extends State<ScanScreen> {
             allowDuplicates: false,
             controller: cameraController,
             onDetect: (barcode, args) {
+              print("ola" + barcode.rawValue.toString());
               print("olaaaaaaa");
             }));
   }
