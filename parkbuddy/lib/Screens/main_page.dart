@@ -79,19 +79,24 @@ class _MainPageState extends State<MainPage> {
       print("olaaaaa");
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.QR);
-      print("JHJHHHHHHHHHHHHH");
-      print('TESTEEEEEEEEEE   -> ' + barcodeScanRes);
-      final split = barcodeScanRes.split(' ');
-      setState(() {
-        _scanned = barcodeScanRes;
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: ((context) => MapSample2(
-                      carLat: double.parse(split[0]),
-                      carLong: double.parse(split[1]),
-                    ))));
-      });
+      print(barcodeScanRes.runtimeType.toString() + "typeeeeee");
+      if (barcodeScanRes != "-1") {
+        final split = barcodeScanRes.split(' ');
+        setState(() {
+          _scanned = barcodeScanRes;
+
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: ((context) => MapSample2(
+                        carLat: double.parse(split[0]),
+                        carLong: double.parse(split[1]),
+                      ))));
+        });
+      } else {
+        _scanned = "unable to read the qr";
+      }
+      ;
       // });
     } catch (e) {
       print("ja bateste");
