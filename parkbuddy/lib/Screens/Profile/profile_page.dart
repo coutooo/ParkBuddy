@@ -135,10 +135,12 @@ class ProfilePage extends StatelessWidget {
                           thickness: 2.5,
                         ),
                         ListView.separated(
-                          reverse: true,
+                          //reverse: true,
                           itemBuilder: (ctx, index) {
-                            print(_histBox.get(index));
-                            final item = _histBox.getAt(index).split('ç');
+                            int reverseIndex = _histBox.length - 1 - index;
+                            print(_histBox.get(reverseIndex));
+                            final item =
+                                _histBox.getAt(reverseIndex).split('ç');
                             return Container(
                               height: height * 0.15,
                               decoration: BoxDecoration(
@@ -172,10 +174,15 @@ class ProfilePage extends StatelessWidget {
                               ),
                             );
                           },
-                          separatorBuilder: (context, index) => Divider(),
+                          separatorBuilder: (context, reverseIndex) =>
+                              Divider(),
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
-                          itemCount: _histBox.length, //_histBox.length,
+                          itemCount: _histBox == null
+                              ? 0
+                              : (_histBox.length > 4
+                                  ? 4
+                                  : _histBox.length), //_histBox.length,
                         ),
                         SizedBox(
                           height: 10,
