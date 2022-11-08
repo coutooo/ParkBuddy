@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -67,14 +68,23 @@ class ProfilePage extends StatelessWidget {
                                   SizedBox(
                                     height: 80,
                                   ),
-                                  Text(
-                                    'Afonso Couto',
-                                    style: TextStyle(
+                                  DefaultTextStyle(
+                                    style: const TextStyle(
                                       color: Colors.black,
-                                      fontSize: 30,
-                                      fontFamily: 'Nunito',
+                                      fontSize: 20.0,
                                     ),
-                                  )
+                                    child: AnimatedTextKit(
+                                      animatedTexts: [
+                                        WavyAnimatedText('Hi Buddy!'),
+                                        WavyAnimatedText(
+                                            'Hope you find your car :)'),
+                                      ],
+                                      isRepeatingAnimation: true,
+                                      onTap: () {
+                                        print("Tap Event");
+                                      },
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -84,11 +94,10 @@ class ProfilePage extends StatelessWidget {
                             left: 0,
                             right: 0,
                             child: Center(
-                              child: Container(
-                                width: inWidth * 0.43,
-                                child: Image.asset(
-                                  'assets/images/profile.png',
-                                  fit: BoxFit.fitWidth,
+                              child: CircleAvatar(
+                                radius: 70,
+                                backgroundImage: AssetImage(
+                                  'assets/images/logo-white.png',
                                 ),
                               ),
                             ),
@@ -126,6 +135,7 @@ class ProfilePage extends StatelessWidget {
                           thickness: 2.5,
                         ),
                         ListView.separated(
+                          reverse: true,
                           itemBuilder: (ctx, index) {
                             print(_histBox.get(index));
                             final item = _histBox.getAt(index).split('ç');
@@ -165,7 +175,7 @@ class ProfilePage extends StatelessWidget {
                           separatorBuilder: (context, index) => Divider(),
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
-                          itemCount: _histBox.length,
+                          itemCount: _histBox.length, //_histBox.length,
                         ),
                         SizedBox(
                           height: 10,
