@@ -7,7 +7,6 @@ import 'package:parkbuddy/Screens/pedometer/pedometer_page.dart';
 import 'package:parkbuddy/Screens/qr_map.dart';
 import 'package:parkbuddy/Screens/qr_page.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:barcode_widget/barcode_widget.dart';
 import 'package:proximity_sensor/proximity_sensor.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:flutter/foundation.dart' as foundation;
@@ -23,7 +22,7 @@ class _MainPageState extends State<MainPage> {
   late double _latitude;
   late double _longitude;
 
-  String scanned = "wait";
+  String _scanned = "wait";
 
   @override
   void initState() {
@@ -75,13 +74,16 @@ class _MainPageState extends State<MainPage> {
   }
 
   Future<void> scanQR() async {
+    String barcodeScanRes;
     try {
-      String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          "#6a0dad", "Cancel", true, ScanMode.QR);
+      print("olaaaaa");
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.QR);
+      print("JHJHHHHHHHHHHHHH");
       print('TESTEEEEEEEEEE   -> ' + barcodeScanRes);
       final split = barcodeScanRes.split(' ');
       setState(() {
-        scanned = barcodeScanRes;
+        _scanned = barcodeScanRes;
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -92,8 +94,9 @@ class _MainPageState extends State<MainPage> {
       });
       // });
     } catch (e) {
+      print("ja bateste");
       setState(() {
-        scanned = "unable to read the qr";
+        _scanned = "unable to read the qr";
       });
     }
   }
