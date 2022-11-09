@@ -34,8 +34,6 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  firebase_core: ^1.18.0
-  cloud_firestore: ^3.1.18
   google_fonts: ^2.1.1
   flutter_svg: ^1.1.5
   flutter_barcode_scanner:
@@ -43,7 +41,6 @@ dependencies:
       url: https://github.com/TylerByte666/flutter_barcode_scanner.git
       ref: 93c00301b5bae8d400795d123bd28e987112b785
   pedometer: ^3.0.0
-  firebase_auth: ^3.11.2
   flutter_launcher_icons: ^0.10.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0

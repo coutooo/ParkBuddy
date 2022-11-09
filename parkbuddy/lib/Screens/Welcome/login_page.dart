@@ -1,11 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:parkbuddy/Screens/Welcome/register_page.dart';
 import 'package:parkbuddy/Screens/main_page.dart';
-import 'package:parkbuddy/Screens/qr_page.dart';
-import 'package:local_auth/local_auth.dart';
 import '../../helpers/biometric_helper.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,17 +10,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // text controllers
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  Future signIn() async {
-    //await FirebaseAuth.instance.signInWithEmailAndPassword(
-    //email: _emailController.text.trim(),
-    //password: _passwordController.text.trim(),
-    //);
-  }
-
   bool showBiometric = false;
   bool isAuthenticated = false;
 
@@ -66,9 +49,6 @@ class _LoginPageState extends State<LoginPage> {
               // text
               Text(
                 "Welcome",
-                //style: GoogleFonts.bebasNeue(
-                //  fontSize: 52,
-                //),
               ),
               SizedBox(
                 height: 10,

@@ -1,11 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
-import 'package:parkbuddy/Screens/Welcome/register_page.dart';
-import 'package:parkbuddy/Screens/main_page.dart';
-import 'package:parkbuddy/Screens/qr_page.dart';
 
 import '../Welcome/login_page.dart';
 
@@ -135,7 +130,6 @@ class ProfilePage extends StatelessWidget {
                           thickness: 2.5,
                         ),
                         ListView.separated(
-                          //reverse: true,
                           itemBuilder: (ctx, index) {
                             int reverseIndex = _histBox.length - 1 - index;
                             print(_histBox.get(reverseIndex));

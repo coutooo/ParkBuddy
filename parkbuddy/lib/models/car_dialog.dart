@@ -123,8 +123,6 @@ class _AddCarDialogState extends State<AddCarDialog> {
       final image = await ImagePicker().pickImage(source: ImageSource.camera);
       if (image == null) return;
 
-      //final imageTemporary = File(image.path);
-
       final imageTemporary = await saveFilePermanently(image.path);
 
       setState(() {
@@ -183,8 +181,6 @@ class _AddCarDialogState extends State<AddCarDialog> {
                   color: Color.fromRGBO(160, 5, 10, 40),
                 ),
               ),
-
-              // https://youtu.be/IePaAGXzmtU?t=1   <- image picker
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color.fromRGBO(160, 5, 10, 40),
@@ -203,7 +199,6 @@ class _AddCarDialogState extends State<AddCarDialog> {
                       Text('Take a picture')
                     ],
                   )),
-              //buildTextfield('assets/images/blackcar.png', iconController),
               buildTextfield(
                 'Car',
                 nameController,

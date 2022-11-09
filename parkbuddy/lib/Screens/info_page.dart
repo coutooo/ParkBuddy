@@ -19,7 +19,6 @@ class _InfoPageState extends State<InfoPage> {
   var carImage;
   late double _latitude;
   late double _longitude;
-  var _address;
   var _indexCar;
 
   @override

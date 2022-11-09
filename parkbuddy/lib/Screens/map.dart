@@ -2,13 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hive/hive.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:skeletons/skeletons.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
@@ -45,6 +42,7 @@ class MapSampleState extends State<MapSample> {
     super.initState();
   }
 
+  // fazer o path
   void _setPolyline(List<PointLatLng> points) {
     final String polylineIdVal = 'polyline_$_polylineIdCounter';
     _polylineIdCounter++;
@@ -125,13 +123,11 @@ class MapSampleState extends State<MapSample> {
     var meCoord = LatLng(_latitude, _longitude);
 
     if (changedCam == true) {
-      print("1111111111111111");
       final GoogleMapController controller = await _controller.future;
       controller.animateCamera(CameraUpdate.newCameraPosition(
           new CameraPosition(target: carCoord, zoom: 18.4746)));
       changedCam = false;
     } else {
-      print("22222222222222");
       final GoogleMapController controller = await _controller.future;
       controller.animateCamera(CameraUpdate.newCameraPosition(
           new CameraPosition(target: meCoord, zoom: 18.4746)));
@@ -147,8 +143,6 @@ class MapSampleState extends State<MapSample> {
     var destinationD = destination.latitude.toString() +
         ',' +
         destination.longitude.toString();
-    print(originD);
-    print(destinationD);
 
     var key = 'AIzaSyCDzvKYkIZ1WSIk-V3uryzZUaNMuG908Jc';
     final String url =
@@ -169,6 +163,7 @@ class MapSampleState extends State<MapSample> {
     return results;
   }
 
+  // posicao inicial da camera
   Completer<GoogleMapController> _controller = Completer();
 
   static final CameraPosition _kGooglePlex = CameraPosition(
@@ -195,7 +190,6 @@ class MapSampleState extends State<MapSample> {
     points: [_carMarker.position, _personMarker.position],
     width: 5,
   );
-  // https://youtu.be/tfFByL7F-00?t=472   vou aqki
 
   @override
   Widget build(BuildContext context) {
@@ -248,7 +242,6 @@ class MapSampleState extends State<MapSample> {
               heroTag: "btn2",
               backgroundColor: Color.fromRGBO(160, 5, 10, 40),
               onPressed: _changeCamera,
-              //label: Text("ME/CAR")
               child: Icon(Icons.location_on_sharp),
             )
           ],

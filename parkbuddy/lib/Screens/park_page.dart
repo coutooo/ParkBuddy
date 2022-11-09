@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:parkbuddy/Screens/info_page.dart';
-import 'package:parkbuddy/models/carRepo.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:parkbuddy/models/car_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';

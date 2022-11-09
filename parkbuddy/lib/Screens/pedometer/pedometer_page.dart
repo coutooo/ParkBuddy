@@ -28,7 +28,6 @@ class _PedPageState extends State<PedPage> {
   }
 
   void onStepCount(StepCount event) {
-    print(event);
     setState(() {
       _steps = event.steps.toString();
     });
@@ -73,7 +72,7 @@ class _PedPageState extends State<PedPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Pedometer example app'),
+          title: const Text('In construction...'),
         ),
         body: Center(
           child: Column(
