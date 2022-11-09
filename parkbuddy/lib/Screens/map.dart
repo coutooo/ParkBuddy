@@ -29,6 +29,7 @@ class MapSampleState extends State<MapSample> {
   static late double carLat;
   static var _latitude;
   static var _longitude;
+  bool changedCam = false;
 
   Set<Polyline> _polylines = Set<Polyline>();
 
@@ -119,21 +120,27 @@ class MapSampleState extends State<MapSample> {
     return await Geolocator.getCurrentPosition();
   }
 
+  Future<void> _changeCamera() async {
+    var carCoord = LatLng(carLat, carLong);
+    var meCoord = LatLng(_latitude, _longitude);
+
+    if (changedCam == true) {
+      print("1111111111111111");
+      final GoogleMapController controller = await _controller.future;
+      controller.animateCamera(CameraUpdate.newCameraPosition(
+          new CameraPosition(target: carCoord, zoom: 18.4746)));
+      changedCam = false;
+    } else {
+      print("22222222222222");
+      final GoogleMapController controller = await _controller.future;
+      controller.animateCamera(CameraUpdate.newCameraPosition(
+          new CameraPosition(target: meCoord, zoom: 18.4746)));
+      changedCam = true;
+    }
+  }
+
   Future<Map<String, dynamic>> getDirections(
       LatLng origin, LatLng destination) async {
-    // AIzaSyCDzvKYkIZ1WSIk-V3uryzZUaNMuG908Jc    directions API
-
-    /*List<Placemark> origin1 =
-        await placemarkFromCoordinates(origin.latitude, origin.longitude);
-
-    List<Placemark> destination1 = await placemarkFromCoordinates(
-        destination.latitude, destination.longitude);
-
-    var originD = origin1[0].street;
-
-    var destinationD = destination1[0].street;
-    */
-
     var mode = 'walking';
     var originD =
         origin.latitude.toString() + ',' + origin.longitude.toString();
@@ -159,10 +166,6 @@ class MapSampleState extends State<MapSample> {
           .decodePolyline(json['routes'][0]['overview_polyline']['points']),
     };
 
-    // https://youtu.be/tfFByL7F-00?t=1726
-
-    print(results);
-
     return results;
   }
 
@@ -170,7 +173,7 @@ class MapSampleState extends State<MapSample> {
 
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(carLat, carLong),
-    zoom: 14.4746,
+    zoom: 18.4746,
   );
 
   // fazer um marker
@@ -225,16 +228,31 @@ class MapSampleState extends State<MapSample> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Color.fromRGBO(160, 5, 10, 40),
-        onPressed: () async {
-          var directions = await getDirections(
-              LatLng(carLat, carLong), LatLng(_latitude, _longitude));
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            FloatingActionButton.extended(
+              heroTag: "btn1",
+              backgroundColor: Color.fromRGBO(160, 5, 10, 40),
+              onPressed: () async {
+                var directions = await getDirections(
+                    LatLng(carLat, carLong), LatLng(_latitude, _longitude));
 
-          _setPolyline(directions['polyline_decoded']);
-        },
-        label: Text('GET PATH'),
-        icon: Icon(Icons.directions_walk),
+                _setPolyline(directions['polyline_decoded']);
+              },
+              label: Text('GET PATH'),
+              icon: Icon(Icons.directions_walk),
+            ),
+            FloatingActionButton.small(
+              heroTag: "btn2",
+              backgroundColor: Color.fromRGBO(160, 5, 10, 40),
+              onPressed: _changeCamera,
+              //label: Text("ME/CAR")
+              child: Icon(Icons.location_on_sharp),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -5,7 +5,6 @@ import 'package:parkbuddy/Screens/Profile/profile_page.dart';
 import 'package:parkbuddy/Screens/park_page.dart';
 import 'package:parkbuddy/Screens/pedometer/pedometer_page.dart';
 import 'package:parkbuddy/Screens/qr_map.dart';
-import 'package:parkbuddy/Screens/qr_page.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:parkbuddy/Screens/scan_page.dart';
 import 'package:proximity_sensor/proximity_sensor.dart';
@@ -20,9 +19,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  late double _latitude;
-  late double _longitude;
-
   String _scanned = "wait";
 
   @override

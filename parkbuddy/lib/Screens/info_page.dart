@@ -1,11 +1,8 @@
-import 'dart:ffi';
 import 'dart:io';
-import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 import 'package:parkbuddy/Screens/map.dart';
 import 'package:parkbuddy/Screens/qr_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:geocoding/geocoding.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 
