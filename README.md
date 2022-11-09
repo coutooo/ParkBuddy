@@ -1,13 +1,13 @@
 # ParkBuddy
-flutter project for CM course
+# flutter project for CM course
 
-
+# Build
 flutter clean     -> clear build
 
 flutter pub get   -> to build
 
 
-dependencies:
+# dependencies:
 
   cupertino_icons: ^1.0.2
   google_fonts: ^2.1.1
