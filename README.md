@@ -3,6 +3,7 @@ flutter project for CM course
 
 
 flutter clean     -> clear build
+
 flutter pub get   -> to build
 
 
