@@ -1,5 +1,5 @@
 # ParkBuddy
-flutter project for CM course
+flutter project for CM course made by Manuel Couto and Afonso Teixeira
 
 # Build
 flutter clean     -> clear build
