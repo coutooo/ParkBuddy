@@ -16,7 +16,8 @@ class _ScanScreenState extends State<ScanScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Mobile Scanner'),
+          title: const Text('Scanner'),
+          backgroundColor: Color.fromRGBO(160, 5, 10, 40),
           actions: [
             IconButton(
               color: Colors.white,
@@ -57,7 +58,6 @@ class _ScanScreenState extends State<ScanScreen> {
             controller: cameraController,
             onDetect: (barcode, args) {
               String scanned = barcode.rawValue.toString();
-              print("olaaaaaaa");
               final split = scanned.split(' ');
 
               Navigator.push(
