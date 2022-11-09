@@ -18,5 +18,7 @@ mudanças
 tirar +0.1 no mapa - done
 escrever imagem escrever no dialog - done
 problema a adicionar novos carros
-bug do scan
+bug do scan - done
+statistics
 historico infinito
+mudar parte de cima da pagina do historico

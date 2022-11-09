@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:parkbuddy/Screens/map.dart';
+import 'package:parkbuddy/Screens/qr_map.dart';
 
 class ScanScreen extends StatefulWidget {
   const ScanScreen({Key? key}) : super(key: key);
@@ -54,8 +56,17 @@ class _ScanScreenState extends State<ScanScreen> {
             allowDuplicates: false,
             controller: cameraController,
             onDetect: (barcode, args) {
-              print("ola" + barcode.rawValue.toString());
+              String scanned = barcode.rawValue.toString();
               print("olaaaaaaa");
+              final split = scanned.split(' ');
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => MapSample(
+                            carLat: double.parse(split[0]),
+                            carLong: double.parse(split[1]),
+                          ))));
             }));
   }
 }
