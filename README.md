@@ -1,6 +1,7 @@
 # ParkBuddy
 flutter project for CM course made by Manuel Couto and Afonso Teixeira
-Help users to never forget the localization of his own car.
+
+Made to be ur buddy on retainig your parking localization.
 
 # Build
 flutter clean     -> clear build
