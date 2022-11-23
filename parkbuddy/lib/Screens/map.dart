@@ -144,7 +144,7 @@ class MapSampleState extends State<MapSample> {
         ',' +
         destination.longitude.toString();
 
-    var key = 'AIzaSyCDzvKYkIZ1WSIk-V3uryzZUaNMuG908Jc';
+    var key = 'put ur google maps key';
     final String url =
         'https://maps.googleapis.com/maps/api/directions/json?origin=$originD&destination=$destinationD&key=$key&mode=$mode';
     var response = await http.get(Uri.parse(url));
